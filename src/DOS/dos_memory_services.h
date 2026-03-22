@@ -1,4 +1,7 @@
 /**
+ * @author      Jeremy Simon Thornton
+ * @copyright   2024 Jeremy Simon Thornton
+ * @version     0.1.0
  * @url https://www.stanislavs.org/helppc/
  */
 #ifndef DOS_MEMORY_SERVICES_H

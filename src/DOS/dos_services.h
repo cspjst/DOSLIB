@@ -1,4 +1,7 @@
-/*
+/**
+* @author      Jeremy Simon Thornton
+* @copyright   2024 Jeremy Simon Thornton
+* @version     0.1.0
 * @url http://bitsavers.informatik.uni-stuttgart.de/pdf/borland/turbo_c/Turbo_C_Reference_Guide_1987.pdf
 * @url https://www.stanislavs.org/helppc/
 */

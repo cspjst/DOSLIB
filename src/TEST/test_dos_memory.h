@@ -1,3 +1,8 @@
+/**
+* @author      Jeremy Simon Thornton
+* @copyright   2026 Jeremy Simon Thornton
+* @version     0.1.0
+*/
 #ifndef TEST_MEMORY_H
 #define TEST_MEMORY_H
 

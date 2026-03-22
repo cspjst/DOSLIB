@@ -1,3 +1,8 @@
+/**
+* @author      Jeremy Simon Thornton
+* @copyright   2024 Jeremy Simon Thornton
+* @version     0.1.0
+*/
 #include "dos_services.h"
 #include "dos_services_constants.h"
 

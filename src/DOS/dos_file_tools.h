@@ -1,4 +1,7 @@
 /**
+  @author      Jeremy Simon Thornton
+ * @copyright   2024 Jeremy Simon Thornton
+ * @version     0.1.0
  * @brief Extra file functions, missing from DOS, that assist the programmer.
  */
 #ifndef DOS_FILE_TOOLS_H
