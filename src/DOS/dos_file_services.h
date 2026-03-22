@@ -41,15 +41,17 @@ dos_error_code_t dos_delete_file(const char* path_name);
 dos_error_code_t dos_move_file_pointer(dos_file_handle_t fhandle, dos_file_position_t foffset, unsigned char forigin, dos_file_position_t* new_pos);
 
 // 43  Change file mode
-dos_error_code_t  dos_get_file_attributes(const char* path_name, dos_file_attributes_t* attr);
-
+dos_error_code_t dos_get_file_attributes(const char* path_name, dos_file_attributes_t* attr);
 dos_error_code_t dos_set_file_attributes(const char* path_name, dos_file_attributes_t attributes);
 
 // 44  I/O control for devices (IOCTL)
 // 45  Duplicate file handle
 // 46  Force duplicate file handle
 // 47  Get current directory
-
+// ...
+// 4E  Find first matching file
+// 4F  Find next matching file
+// ...
 // 56  Rename file
 dos_error_code_t dos_rename_file(const char* old_path, const char* new_path);
 
