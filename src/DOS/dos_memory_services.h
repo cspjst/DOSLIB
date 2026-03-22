@@ -11,10 +11,13 @@
 #include "dos_memory_constants.h"
 #include "dos_memory_types.h"
 
+// 48  Allocate memory blocks
 dos_error_code_t dos_allocate_memory_blocks(unsigned short paragraphs, unsigned short* segment);
+dos_error_code_t dos_get_free_memory_paragraphs(unsigned short* free);
 
+// 49  Free allocated memory blocks
 dos_error_code_t dos_free_allocated_memory_blocks(unsigned short segment);
 
-dos_error_code_t dos_get_free_memory_paragraphs(unsigned short* free);
+// 4A  Modify allocated memory blocks
 
 #endif
