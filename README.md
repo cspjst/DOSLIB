@@ -60,9 +60,11 @@ Also, (see [BIOSLIB](https://github.com/cspjst/BIOSLIB/)) inspired by David Jurg
 - [ ]	INT 21,45  Duplicate file handle
 - [ ]	INT 21,46  Force duplicate file handle
 - [ ]	INT 21,47  Get current directory
+
 ...
 - [ ]	INT 21,4E  Find first matching file
 - [ ]	INT 21,4F  Find next matching file
+
 ...
 - [x]	INT 21,56  Rename file
 - [ ]	INT 21,57  Get/set file date and time using handle
