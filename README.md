@@ -37,3 +37,8 @@ Also, (see [BIOSLIB](https://github.com/cspjst/BIOSLIB/)) inspired by David Jurg
 > git commit -m "Sync BIOSLIB submodule"
 >  ```
 
+## Progress...
+
+*N.B.* Implemented on an ad hoc basis as the need(s) arise:
+
+- [ ]
