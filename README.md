@@ -15,6 +15,17 @@ Also, (see [BIOSLIB](https://github.com/cspjst/BIOSLIB/)) inspired by David Jurg
 > [!IMPORTANT]  
 > DOSLIB is dependant on [BIOSLIB](https://github.com/cspjst/BIOSLIB/), ergo, you must initialize submodules:
 > ```git
-> git clone --recurse-submodules https://github.com/DOSLIB/
+> # First-time clone
+> git clone --recurse-submodules https://github.com/cspjst/DOSLIB.git
+> 
+> # OR, if already cloned:
+> git submodule update --init --recursive
+> 
+> # To pull latest BIOSLIB changes later:
+> cd bioslib
+> git pull origin main
+> cd ..
+> git add bioslib
+> git commit -m "Sync BIOSLIB submodule"
 >  ```
 
