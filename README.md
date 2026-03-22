@@ -15,7 +15,7 @@ Also, (see [BIOSLIB](https://github.com/cspjst/BIOSLIB/)) inspired by David Jurg
 > [!TIP]
 > *Adding the Library*
 > 
-> In your main project repository (the one using BIOSLIB):
+> In your main project repository (the one using DOSLIB):
 > ```bash
 > git submodule add https://github.com/cspjst/DOSLIB.git doslib
 > ```
