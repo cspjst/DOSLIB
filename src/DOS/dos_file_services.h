@@ -53,4 +53,6 @@ dos_error_code_t dos_set_file_attributes(const char* path_name, dos_file_attribu
 // 56  Rename file
 dos_error_code_t dos_rename_file(const char* old_path, const char* new_path);
 
+// 57  Get/set file date and time using handle
+
 #endif
