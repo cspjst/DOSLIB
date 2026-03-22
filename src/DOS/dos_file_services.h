@@ -18,7 +18,7 @@ dos_error_code_t dos_get_disk_free_space(unsigned char drive_number, dos_file_di
 // 39  Create subdirectory (mkdir)
 // 3A  Remove subdirectory (rmdir)
 // 3B  Change current subdirectory (chdir)
-//
+
 // 3C  Create file using handle
 dos_error_code_t dos_create_file(const char* path_name, dos_file_attributes_t create_attributes, dos_file_handle_t* fhandle);
 
