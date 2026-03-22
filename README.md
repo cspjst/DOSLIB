@@ -42,6 +42,17 @@ Also, (see [BIOSLIB](https://github.com/cspjst/BIOSLIB/)) inspired by David Jurg
 *N.B.* Implemented on an ad hoc basis as the need(s) arise:
 
 ### DOS File Services:
+- [ ] INT 21,D  Disk reset
+- [ ] INT 21,E  Select disk
+
+...
+- [ ] INT 21,19  Get current default drive
+- [ ]	INT 21,1A  Set disk transfer address
+
+...
+- [ ] INT 21,2F  Get disk transfer address
+
+...
 - [x] INT 21,36  Get disk free space
 - [ ] INT 21,37  Get/set switch character (undocumented)
 - [ ]	INT 21,38  Get/set country dependent information
@@ -70,4 +81,6 @@ Also, (see [BIOSLIB](https://github.com/cspjst/BIOSLIB/)) inspired by David Jurg
 - [ ]	INT 21,57  Get/set file date and time using handle
 
 ### DOS Memory Services:
-- [ ]
+- [x] INT 21,48  Allocate memory blocks
+- [x]	INT 21,49  Free allocated memory blocks
+- [ ]	INT 21,4A  Modify allocated memory blocks
