@@ -1,13 +1,8 @@
 #ifndef TEST_SERVICES_H
 #define TEST_SERVICES_H
 
-#ifdef USE_DOSLIBC
-    #include "../STD/dos_stdio.h"
-    #include "../STD/dos_assert.h"
-#else
-    #include <stdio.h>
-    #include <assert.h>
-#endif
+#include <stdio.h>
+#include <assert.h>
 
 #include "../DOS/dos_services.h"
 

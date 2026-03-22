@@ -1,25 +1,19 @@
 #ifndef DOS_SERVICES_FILES_TYPES_H
 #define DOS_SERVICES_FILES_TYPES_H
 
-#ifdef USE_DOSLIBC
-    #include "../../dosstd/dos_stdint.h"
-#else
-    #include <stdint.h>
-#endif
-
-typedef uint16_t dos_file_handle_t;
-typedef uint16_t dos_file_attributes_t;
-typedef int32_t dos_file_position_t;    // N.B. signed offset
-typedef uint32_t dos_file_size_t;
+typedef unsigned short dos_file_handle_t;
+typedef unsigned short dos_file_attributes_t;
+typedef long dos_file_position_t;    // N.B. signed offset
+typedef unsigned long dos_file_size_t;
 
 /**
 * DOS int 21h, 36h      Get Disk Free Space
 */
 typedef struct {
-    int16_t sectors_per_cluster;    // 0FFFFH if the drive number is invalid
-    int16_t available_clusters;
-    int16_t bytes_per_sector;
-    int16_t clusters_per_drive;
+    unsigned short sectors_per_cluster;    // 0FFFFH if the drive number is invalid
+    unsigned short available_clusters;
+    unsigned short bytes_per_sector;
+    unsigned short clusters_per_drive;
 } dos_file_disk_space_info_t;
 
 /**

@@ -4,20 +4,14 @@
 #ifndef DOS_MEMORY_SERVICES_H
 #define DOS_MEMORY_SERVICES_H
 
-#ifdef USE_DOSLIBC
-    #include "../../dosstd/dos_stdint.h"
-#else
-    #include <stdint.h>
-#endif
-
 #include "dos_error_types.h"
 #include "dos_memory_constants.h"
 #include "dos_memory_types.h"
 
-dos_error_code_t dos_allocate_memory_blocks(uint16_t paragraphs, uint16_t* segment);
+dos_error_code_t dos_allocate_memory_blocks(unsigned short paragraphs, unsigned short* segment);
 
-dos_error_code_t dos_free_allocated_memory_blocks(uint16_t segment);
+dos_error_code_t dos_free_allocated_memory_blocks(unsigned short segment);
 
-dos_error_code_t dos_get_free_memory_paragraphs(uint16_t* free);
+dos_error_code_t dos_get_free_memory_paragraphs(unsigned short* free);
 
 #endif

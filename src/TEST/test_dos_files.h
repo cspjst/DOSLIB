@@ -1,24 +1,15 @@
 #ifndef TEST_DOS_FILES_H
 #define TEST_DOS_FILES_H
 
-#ifdef USE_DOSLIBC
-    #include "../STD/dos_stdio.h"
-    #include "../STD/dos_stdint.h"
-    #include "../STD/dos_string.h"
-    #include "../STD/dos_assert.h"
-#else
-    #include <stdint.h>
-    #include <stdio.h>
-    #include <string.h>
-    #include <assert.h>
-#endif
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <assert.h>
 
 #include "../DOS/dos_file_tools.h"
 #include "../DOS/dos_file_services.h"
 #include "../DOS/dos_error_types.h"
 #include "../DOS/dos_file_services.h"
-
-
 
 void test_dos_files() {
     printf("Testing DOS file functions...\n");

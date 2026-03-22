@@ -5,12 +5,6 @@
 #ifndef DOS_SERVICES_H
 #define DOS_SERVICES_H
 
-#ifdef USE_DOSLIBC
-    #include "../../dosstd/dos_stdint.h"
-#else
-    #include <stdint.h>
-#endif
-
 // 0  Program terminate
 // 1  Keyboard input with echo
 // 2  Display output
@@ -50,7 +44,7 @@
 // 24  Set relative record field for FCB
 
 // 25  Set interrupt vector
-void dos_set_interrupt_vector(uint8_t vec_num, void* phandler);
+void dos_set_interrupt_vector(unsigned char vec_num, void* phandler);
 
 // 26  Create new program segment
 // 27  Random block read using FCB
@@ -69,7 +63,7 @@ void dos_set_interrupt_vector(uint8_t vec_num, void* phandler);
 // 34  Get address to DOS critical flag (undocumented)
 
 // 35  Get interrupt vector
-void* dos_get_interrupt_vector(uint8_t vec_num);
+void* dos_get_interrupt_vector(unsigned char vec_num);
 
 // 36  Get disk free space
 // 37  Get/set switch character (undocumented)
@@ -95,7 +89,7 @@ void* dos_get_interrupt_vector(uint8_t vec_num);
 // 4B  EXEC load and execute program (func 1 undocumented)
 
 // 4C  Terminate process with return code
-void dos_terminate_process_with_return_code(uint8_t return_code);
+void dos_terminate_process_with_return_code(unsigned char return_code);
 
 // 4D  Get return code of a sub-process
 // 4E  Find first matching file

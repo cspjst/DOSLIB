@@ -36,7 +36,7 @@
 * @param       segment* pointer to segment variable
 * @return      the segment address of the reserved memory or 0 if request failed
 */
-dos_error_code_t dos_allocate_memory_blocks(uint16_t paragraphs, uint16_t* segment) {
+dos_error_code_t dos_allocate_memory_blocks(unsigned short paragraphs, unsigned short* segment) {
     if (!segment) return DOS_INVALID_DATA;
 
     dos_error_code_t err_code = 0;
@@ -79,7 +79,7 @@ OK:     les     di, segment
 *  other .COM files take all available memory when they load.
 * @see  INT 21,4A
 */
-uint16_t dos_free_allocated_memory_blocks(uint16_t segment) {
+unsigned short dos_free_allocated_memory_blocks(unsigned short segment) {
 if (!segment) return DOS_INVALID_DATA;
 
     dos_error_code_t err_code = 0;
@@ -108,7 +108,7 @@ if (!segment) return DOS_INVALID_DATA;
  * available memory, which will be returned in BX. (The call will return an error, which can be
  * ignored, since DOS cannot allocate more than 640k of memory.)
  */
-dos_error_code_t dos_get_free_memory_paragraphs(uint16_t* free) {
+dos_error_code_t dos_get_free_memory_paragraphs(unsigned short* free) {
     if (!free) return DOS_INVALID_DATA;
 
     dos_error_code_t err_code = 0;

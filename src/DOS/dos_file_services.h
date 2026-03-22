@@ -4,17 +4,11 @@
 #ifndef DOS_FILE_SERVICES_H
 #define DOS_FILE_SERVICES_H
 
-#ifdef USE_DOSLIBC
-    #include "../../dosstd/dos_stdint.h"
-#else
-    #include <stdint.h>
-#endif
-
 #include "dos_error_types.h"
 #include "dos_file_types.h"
 
 // 36  Get disk free space
-dos_error_code_t dos_get_disk_free_space(uint8_t drive_number, dos_file_disk_space_info_t* info);
+dos_error_code_t dos_get_disk_free_space(unsigned char drive_number, dos_file_disk_space_info_t* info);
 
 // 37  Get/set switch character (undocumented)
 // 38  Get/set country dependent information
@@ -26,22 +20,22 @@ dos_error_code_t dos_get_disk_free_space(uint8_t drive_number, dos_file_disk_spa
 dos_error_code_t dos_create_file(const char* path_name, dos_file_attributes_t create_attributes, dos_file_handle_t* fhandle);
 
 // 3D  Open file using handle
-dos_error_code_t dos_open_file(const char* path_name, uint8_t access_attributes, dos_file_handle_t* fhandle);
+dos_error_code_t dos_open_file(const char* path_name, unsigned char access_attributes, dos_file_handle_t* fhandle);
 
 // 3E  Close file using handle
 dos_error_code_t dos_close_file(dos_file_handle_t fhandle);
 
 // 3F  Read file or device using handle
-dos_error_code_t dos_read_file(dos_file_handle_t fhandle, uint16_t do_bytes, char* buffer, uint16_t* done_bytes);
+dos_error_code_t dos_read_file(dos_file_handle_t fhandle, unsigned short do_bytes, char* buffer, unsigned short* done_bytes);
 
 // 40  Write file or device using handle
-dos_error_code_t dos_write_file(dos_file_handle_t fhandle, uint16_t do_bytes, const char* buffer, uint16_t* done_bytes);
+dos_error_code_t dos_write_file(dos_file_handle_t fhandle, unsigned short do_bytes, const char* buffer, unsigned short* done_bytes);
 
 // 41  Delete file
 dos_error_code_t dos_delete_file(const char* path_name);
 
 // 42  Move file pointer using handle
-dos_error_code_t dos_move_file_pointer(dos_file_handle_t fhandle, dos_file_position_t foffset, uint8_t forigin, dos_file_position_t* new_pos);
+dos_error_code_t dos_move_file_pointer(dos_file_handle_t fhandle, dos_file_position_t foffset, unsigned char forigin, dos_file_position_t* new_pos);
 
 // 43  Change file mode
 dos_error_code_t  dos_get_file_attributes(const char* path_name, dos_file_attributes_t* attr);

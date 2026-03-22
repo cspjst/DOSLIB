@@ -1,6 +1,5 @@
 #include "dos_services.h"
 #include "dos_services_constants.h"
-#include "dos_error_types.h"
 
 /**
 * @brief Provides a safe method for changing interrupt vectors
@@ -10,7 +9,7 @@
 * AL = interrupt number
 * DS:DX = pointer to interrupt handler
 */
-void dos_set_interrupt_vector(uint8_t vec_num, void* phandler) {
+void dos_set_interrupt_vector(unsigned char vec_num, void* phandler) {
     __asm {
         .8086
         pushf                                ; preserve what int 21h may not
@@ -37,7 +36,7 @@ void dos_set_interrupt_vector(uint8_t vec_num, void* phandler) {
 * @param vec_num
 * @return void* segment:offset pointer to interrupt handler
 */
-void* dos_get_interrupt_vector(uint8_t vec_num) {
+void* dos_get_interrupt_vector(unsigned char vec_num) {
     void* phandler = 0;
     __asm {
         .8086
@@ -70,7 +69,7 @@ void* dos_get_interrupt_vector(uint8_t vec_num) {
  * - does not close FCBs
  * - this function is not supported in versions of DOS before 2.x
  */
-void dos_terminate_process_with_return_code(uint8_t return_code) {
+void dos_terminate_process_with_return_code(unsigned char return_code) {
     __asm {
         .8086
         mov     al, return_code

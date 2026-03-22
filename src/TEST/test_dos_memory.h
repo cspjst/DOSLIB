@@ -1,15 +1,9 @@
 #ifndef TEST_MEMORY_H
 #define TEST_MEMORY_H
 
-#ifdef USE_DOSLIBC
-    #include "../STD/dos_stdio.h"
-    #include "../STD/dos_stdint.h"
-    #include "../STD/assert.h"
-#else
-    #include <stdio.h>
-    #include <stdint.h>
-    #include <assert.h>
-#endif
+#include <stdio.h>
+#include <stdint.h>
+#include <assert.h>
 
 #include "../DOS/dos_memory_services.h"
 

@@ -18,7 +18,7 @@
 * - used to determine available space on specified disk
 * - see	INT 21,1B   INT 21,1C
 */
-dos_error_code_t dos_get_disk_free_space(uint8_t drive_number, dos_file_disk_space_info_t* info) {
+dos_error_code_t dos_get_disk_free_space(unsigned char drive_number, dos_file_disk_space_info_t* info) {
     dos_error_code_t errno = 0;
     __asm {
         .8086
@@ -101,7 +101,7 @@ END:    pop     ds
 * AX = file handle if CF not set
 *    = error code if CF set  (see DOS ERROR CODES)
 */
-dos_error_code_t dos_open_file(const char* path_name, uint8_t access_attributes, dos_file_handle_t* fhandle) {
+dos_error_code_t dos_open_file(const char* path_name, unsigned char access_attributes, dos_file_handle_t* fhandle) {
     dos_error_code_t errno = 0;
 	__asm {
 		.8086
@@ -169,7 +169,7 @@ END:    pop     ds
 * - when AX is not equal to CX then a partial read occurred due to end of file
 * - if AX is zero, no data was read, and EOF occurred before read
 */
-dos_error_code_t dos_read_file(dos_file_handle_t fhandle, uint16_t do_bytes, char* buffer, uint16_t* done_bytes) {
+dos_error_code_t dos_read_file(dos_file_handle_t fhandle, unsigned short do_bytes, char* buffer, unsigned short* done_bytes) {
     dos_error_code_t errno = 0;
     __asm {
         .8086
@@ -183,7 +183,7 @@ dos_error_code_t dos_read_file(dos_file_handle_t fhandle, uint16_t do_bytes, cha
         int     DOS_SERVICE
         jnc     OK
         mov     errno, ax
-        mov     ax, 0xFFFF                          ; EOF as uint16_t (-1)
+        mov     ax, 0xFFFF                          ; EOF as unsigned short (-1)
 
 OK:     lds     di, done_bytes
         mov     cx, ds
@@ -211,7 +211,7 @@ END:    pop     ds
 * - if AX is not equal to CX on return, a partial write occurred
 * - this function can be used to truncate a file to the current file position by writing zero bytes
 */
-dos_error_code_t  dos_write_file(dos_file_handle_t fhandle, uint16_t do_bytes, const char* buffer, uint16_t* done_bytes) {
+dos_error_code_t  dos_write_file(dos_file_handle_t fhandle, unsigned short do_bytes, const char* buffer, unsigned short* done_bytes) {
     dos_error_code_t errno = 0;
     __asm {
         .8086
@@ -225,7 +225,7 @@ dos_error_code_t  dos_write_file(dos_file_handle_t fhandle, uint16_t do_bytes, c
         int     DOS_SERVICE
         jnc     OK
         mov     errno, ax
-        mov     ax, 0xFFFF                          ; EOF as uint16_t (-1)
+        mov     ax, 0xFFFF                          ; EOF as unsigned short (-1)
 
 OK:     lds     di, done_bytes
         mov     cx, ds
@@ -300,7 +300,7 @@ END:    pop     ds
 * can corrupt the FAT in some versions of DOS; the file should first
 * be grown from zero to one byte and then to the desired large size
 */
-dos_error_code_t dos_move_file_pointer(dos_file_handle_t fhandle, dos_file_position_t foffset, uint8_t forigin, dos_file_position_t* new_pos) {
+dos_error_code_t dos_move_file_pointer(dos_file_handle_t fhandle, dos_file_position_t foffset, unsigned char forigin, dos_file_position_t* new_pos) {
     dos_error_code_t errno = 0;
 	__asm {
 		.8086
