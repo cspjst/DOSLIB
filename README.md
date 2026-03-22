@@ -42,37 +42,30 @@ Also, (see [BIOSLIB](https://github.com/cspjst/BIOSLIB/)) inspired by David Jurg
 *N.B.* Implemented on an ad hoc basis as the need(s) arise:
 
 ### DOS File Services:
-- [ ] INT 21,36  Get disk free space
+- [x] INT 21,36  Get disk free space
 - [ ] INT 21,37  Get/set switch character (undocumented)
 - [ ]	INT 21,38  Get/set country dependent information
 - [ ]	INT 21,39  Create subdirectory (mkdir)
 - [ ]	INT 21,3A  Remove subdirectory (rmdir)
 - [ ]	INT 21,3B  Change current subdirectory (chdir)
-- [ ]	INT 21,3C  Create file using handle
-- [ ]	INT 21,3D  Open file using handle
-- [ ]	INT 21,3E  Close file using handle
-- [ ]	INT 21,3F  Read file or device using handle
-- [ ]	INT 21,40  Write file or device using handle
-- [ ]	INT 21,41  Delete file
-- [ ]	INT 21,42  Move file pointer using handle
-- [ ]	INT 21,43  Change file mode
+- [x]	INT 21,3C  Create file using handle
+- [x]	INT 21,3D  Open file using handle
+- [x]	INT 21,3E  Close file using handle
+- [x]	INT 21,3F  Read file or device using handle
+- [x]	INT 21,40  Write file or device using handle
+- [x]	INT 21,41  Delete file
+- [x]	INT 21,42  Move file pointer using handle
+- [x]	INT 21,43  Change file mode
 - [ ]	INT 21,44  I/O control for devices (IOCTL)
 - [ ]	INT 21,45  Duplicate file handle
 - [ ]	INT 21,46  Force duplicate file handle
 - [ ]	INT 21,47  Get current directory
-- [ ]	INT 21,48  Allocate memory blocks
-- [ ]	INT 21,49  Free allocated memory blocks
-- [ ]	INT 21,4A  Modify allocated memory blocks
-- [ ]	INT 21,4B  EXEC load and execute program (func 1 undocumented)
-- [ ]	INT 21,4C  Terminate process with return code
-- [ ]	INT 21,4D  Get return code of a sub-process
+...
 - [ ]	INT 21,4E  Find first matching file
 - [ ]	INT 21,4F  Find next matching file
-- [ ]	INT 21,50  Set current process id (undocumented)
-- [ ]	INT 21,51  Get current process id (undocumented)
-- [ ]	INT 21,52  Get pointer to DOS "INVARS" (undocumented)
-- [ ]	INT 21,53  Generate drive parameter table (undocumented)
-- [ ]	INT 21,54  Get verify setting
-- [ ]	INT 21,55  Create PSP (undocumented)
-- [ ]	INT 21,56  Rename file
+...
+- [x]	INT 21,56  Rename file
 - [ ]	INT 21,57  Get/set file date and time using handle
+
+### DOS Memory Services:
+- [ ]
