@@ -12,6 +12,14 @@ A retro programming library to make life easier using the DOS functions of MSDOS
 
 Also, (see [BIOSLIB](https://github.com/cspjst/BIOSLIB/)) inspired by David Jurgens' HelpPC Reference Library and my desire to practice 8086 assembly language like it was 1986 :)
 
+> [!TIP]
+> *Adding the Library*
+> 
+> In your main project repository (the one using BIOSLIB):
+> ```bash
+> git submodule add https://github.com/cspjst/DOSLIB.git doslib
+> ```
+
 > [!IMPORTANT]  
 > DOSLIB is dependant on [BIOSLIB](https://github.com/cspjst/BIOSLIB/), ergo, you must initialize submodules:
 > ```git
