@@ -21,8 +21,7 @@
 // A  Buffered keyboard input
 // B  Check standard input status
 // C  Clear keyboard buffer, invoke keyboard function
-// D  Disk reset
-// E  Select disk
+
 // F  Open file using FCB
 // 10  Close file using FCB
 // 11  Search for first entry using FCB
@@ -33,8 +32,7 @@
 // 16  Create a file using FCB
 // 17  Rename file using FCB
 // 18  DOS dummy function (CP/M) (not used/listed)
-// 19  Get current default drive
-// 1A  Set disk transfer address
+
 // 1B  Get allocation table information
 // 1C  Get allocation table info for specific device
 // 1D  DOS dummy function (CP/M) (not used/listed)
@@ -57,8 +55,7 @@ void dos_set_interrupt_vector(unsigned char vec_num, void* phandler);
 // 2B  Set date
 // 2C  Get time
 // 2D  Set time
-// 2E  Set/reset verify switch
-// 2F  Get disk transfer address
+
 // 30  Get DOS version number
 // 31  Terminate process and remain resident
 // 32  Get pointer to drive parameter table (undocumented)
@@ -68,43 +65,18 @@ void dos_set_interrupt_vector(unsigned char vec_num, void* phandler);
 // 35  Get interrupt vector
 void* dos_get_interrupt_vector(unsigned char vec_num);
 
-// 36  Get disk free space
-// 37  Get/set switch character (undocumented)
-// 38  Get/set country dependent information
-// 39  Create subdirectory (mkdir)
-// 3A  Remove subdirectory (rmdir)
-// 3B  Change current subdirectory (chdir)
-// 3C  Create file using handle
-// 3D  Open file using handle
-// 3E  Close file using handle
-// 3F  Read file or device using handle
-// 40  Write file or device using handle
-// 41  Delete file
-// 42  Move file pointer using handle
-// 43  Change file mode
-// 44  I/O control for devices (IOCTL)
-// 45  Duplicate file handle
-// 46  Force duplicate file handle
-// 47  Get current directory
-// 48  Allocate memory blocks
-// 49  Free allocated memory blocks
-// 4A  Modify allocated memory blocks
 // 4B  EXEC load and execute program (func 1 undocumented)
 
 // 4C  Terminate process with return code
 void dos_terminate_process_with_return_code(unsigned char return_code);
 
 // 4D  Get return code of a sub-process
-// 4E  Find first matching file
-// 4F  Find next matching file
+
 // 50  Set current process id (undocumented)
 // 51  Get current process id (undocumented)
 // 52  Get pointer to DOS "INVARS" (undocumented)
 // 53  Generate drive parameter table (undocumented)
-// 54  Get verify setting
+
 // 55  Create PSP (undocumented)
-// 56  Rename file
-// 57  Get/set file date and time using handle
-// 58  Get/set memory allocation strategy (3.x+, undocumented)
 
 #endif
