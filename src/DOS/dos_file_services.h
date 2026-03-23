@@ -10,6 +10,14 @@
 #include "dos_error_types.h"
 #include "dos_file_types.h"
 
+// D  Disk reset
+// E  Select disk
+// ...
+// 19  Get current default drive
+// 1A  Set disk transfer address
+// ...
+// 2E  Set/reset verify switch
+// 2F  Get disk transfer address
 // 36  Get disk free space
 dos_error_code_t dos_get_disk_free_space(unsigned char drive_number, dos_file_disk_space_info_t* info);
 
@@ -52,6 +60,7 @@ dos_error_code_t dos_set_file_attributes(const char* path_name, dos_file_attribu
 // 4E  Find first matching file
 // 4F  Find next matching file
 // ...
+// 54  Get verify setting
 // 56  Rename file
 dos_error_code_t dos_rename_file(const char* old_path, const char* new_path);
 
