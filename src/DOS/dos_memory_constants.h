@@ -23,7 +23,7 @@
 * 20-bit address bus can address 1,048,576 bytes of memory, it segments it into sixteen 64kB segments.
 * Working within those 1,048,576 bytes of memory using its four segment:offset register pairs to address 64KiB chunks.
 */
-#define DOS_MEM_MAX_DOS_ALLOCATE 1048560
+#define DOS_MAX_ALLOCATE_BYTES 1048560
 
 /**
 * MCB - DOS Memory Control Block size 16 bytes ie a paragraph
