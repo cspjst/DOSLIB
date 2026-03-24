@@ -6,7 +6,8 @@
 #ifndef DOS_MEMORY_TYPES_H
 #define DOS_MEMORY_TYPES_H
 
-typedef unsigned short dos_paragraph_t;
+// NB 8086 20-bit address bus can address 1,048,576 bytes of memory
+typedef unsigned long dos_memsize_t;
 
 typedef union {
     unsigned short word;
