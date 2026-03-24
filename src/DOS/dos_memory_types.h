@@ -6,6 +6,8 @@
 #ifndef DOS_MEMORY_TYPES_H
 #define DOS_MEMORY_TYPES_H
 
+typedef unsigned short dos_paragraph_t;
+
 typedef union {
     unsigned short word;
     unsigned char bytes[2];
