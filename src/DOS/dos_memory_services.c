@@ -39,7 +39,7 @@
 *
 * @param       number of paragraphs (16 bytes) requested
 * @param       segment* pointer to segment variable
-* @return      the segment address of the reserved memory or 0 if request failed
+* @return      0 on success or error code
 */
 dos_error_code_t dos_allocate_memory_blocks(unsigned short paragraphs, unsigned short* segment) {
     if (!segment) return DOS_INVALID_DATA;
