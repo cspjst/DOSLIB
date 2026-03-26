@@ -4,6 +4,7 @@
 * @version     0.1.0
 */
 #include "dos_services.h"
+#include "dos_services_types.h"
 #include "dos_services_constants.h"
 
 /**
@@ -121,6 +122,6 @@ void dos_get_time(dos_time_t* date) {
  * AL = 00 if time change successful
  *    = FF if time invalid
  */
-dos_error_code_t dos_get_time(dos_time_t* date) {
+dos_error_code_t dos_set_time(const dos_time_t* date) {
 
 }

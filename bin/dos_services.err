@@ -1,0 +1,2 @@
+/Users/jeremythornton/dosbox/cspjst/DOSLIB/src/DOS/dos_services.c(119): Warning! W107: Missing return value for function 'dos_set_date'
+/Users/jeremythornton/dosbox/cspjst/DOSLIB/src/DOS/dos_services.c(151): Warning! W107: Missing return value for function 'dos_set_time'
