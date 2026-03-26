@@ -6,6 +6,7 @@
 #include "dos_services.h"
 #include "dos_services_types.h"
 #include "dos_services_constants.h"
+#include "dos_error_types.h"
 
 /**
 * @brief Provides a safe method for changing interrupt vectors
@@ -85,13 +86,77 @@ void dos_terminate_process_with_return_code(unsigned char return_code) {
     }
 }
 
-
+/**
+ * @brief INT 21,2A - Get Date - retrieves system date based on the DOS maintained clock
+ * @note updates BIOS Data Area current date and date rollover flag at location 40:70
+ *
+ * AH = 2A
+ * on return:
+ * AL = day of the week (0=Sunday)
+ * CX = year (1980-2099)
+ * DH = month (1-12)
+ * DL = day (1-31)
+ */
 void dos_get_date(dos_date_t* date) {
+    __asm {
+        .8086
+        pushf                               ; preserve what int 21h may not
+        push    ds                          ; due to unreliable behaviour
 
+        mov     ah, DOS_GET_DATE
+        int     DOS_SERVICE
+        les     di, date                    ; copy pointer to date into ES:DI
+        stosb                               ; fill the date struct...
+        mov     [di], cx
+        mov     [di + 2], dh
+        mov     [di + 3], dl
+
+        pop     ds
+        popf
+    }
 }
 
+/**
+ * @brief INT 21,2B - Set Date - sets DOS maintained clock
+ * @note DOS versions 3.3+ also update the CMOS date where applicable
+ *
+ * typedef struct {
+ *  unsigned char   dotw;   // AL = day of the week (0=Sunday)
+ * 	unsigned short  year;   // CX = year (1980-2099)
+ * 	unsigned char   month;  // DH = month (1-12)
+ * 	unsigned char   day;    // DL = day (1-31)
+ * } dos_date_t;
+ *
+ * AH = 2B
+ * CX = year (1980-2099)
+ * DH = month (1-12)
+ * DL = day (1-31)
+ * on return:
+ * AL = 00 if date change successful
+ *    = FF if invalid date
+ */
 dos_error_code_t dos_set_date(const dos_date_t* date) {
+    dos_error_code_t errno = DOS_INVALID_DATA;
+    __asm {
+        .8086
+        pushf                               ; preserve what int 21h may not
+        push    ds                          ; due to unreliable behaviour
 
+        les     di, date                    ; copy pointer to date into ES:DI
+        mov     cx, [di + 1]                ; copy the data struct...
+        mov     dh, [di + 3]
+        mov     dl, [di + 4]
+        mov     ah, DOS_SET_DATE
+        int     DOS_SERVICE
+        test    al, al                      ; AL = 00 if date change successful
+        jnz     END
+        mov     errno, 0
+
+ END:   pop     ds
+        popf
+    }
+
+    return errno;
 }
 
 /**
@@ -123,5 +188,7 @@ void dos_get_time(dos_time_t* date) {
  *    = FF if time invalid
  */
 dos_error_code_t dos_set_time(const dos_time_t* date) {
+    dos_error_code_t errno = 0;
 
+    return errno;
 }

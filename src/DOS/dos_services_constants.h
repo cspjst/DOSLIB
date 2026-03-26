@@ -53,10 +53,10 @@
 #define DOS_RANDOM_BLOCK_READ_USING_FCB
 #define DOS_RANDOM_BLOCK_WRITE_USING_FCB
 #define DOS_PARSE_FILENAME_FOR_FCB
-#define DOS_GET_DATE
-#define DOS_SET_DATE
-#define DOS_GET_TIME
-#define DOS_SET_TIME
+#define DOS_GET_DATE                                        2Ah
+#define DOS_SET_DATE                                        2Bh
+#define DOS_GET_TIME                                        2Ch
+#define DOS_SET_TIME                                        2Dh
 #define DOS_TOGGLE_VERIFY_SWITCH
 #define DOS_GET_DISK_TRANSFER_ADDRESS
 #define DOS_GET_DOS_VERSION_NUMBER

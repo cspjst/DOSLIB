@@ -77,10 +77,25 @@ void test_time_date() {
     dos_get_date(&d);
     dos_time_to_str(&t, time, ':');
     dos_date_to_str(&d, date, '/');
-
     printf("%s\n", time);
     printf("%s\n", date);
 
+    d.day = 1;
+    d.month = 2;
+    d.year = 0;
+    assert(dos_set_date(&d) == DOS_INVALID_DATA);
+
+    d.day = 1;
+    d.month = 2;
+    d.year = 1986;
+    assert(dos_set_date(&d) == 0);
+
+    dos_get_time(&t);
+    dos_get_date(&d);
+    dos_time_to_str(&t, time, ':');
+    dos_date_to_str(&d, date, '/');
+    printf("%s\n", time);
+    printf("%s\n", date);
 }
 
 void test_dos_services(void) {
