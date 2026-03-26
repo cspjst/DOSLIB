@@ -1,7 +1,7 @@
 Open Watcom Linker Version 2.0 beta May  3 2025 18:23:37
 Copyright (c) 2002-2025 The Open Watcom Contributors. All Rights Reserved.
 Portions Copyright (c) 1985-2002 Sybase, Inc. All Rights Reserved.
-Created on:       26/03/24 17:35:18
+Created on:       26/03/26 11:42:15
 Executable Image: TEST.exe
 creating a DOS executable
 
@@ -24,16 +24,16 @@ DGROUP                          0641:0000            000023a0
 Segment                Class          Group          Address         Size
 =======                =====          =====          =======         ====
 
-bios_clock_services_TEXT CODE         AUTO           0000:0000       00000054
-bios_keyboard_services_TEXT CODE      AUTO           0000:0054       0000007e
-bios_memory_services_TEXT CODE        AUTO           0000:00d2       0000002d
-bios_video_services_TEXT CODE         AUTO           0000:00ff       00000155
-bios_video_services_constants_TEXT CODE AUTO         0000:0254       00000000
-dos_file_services_TEXT CODE           AUTO           0000:0254       00000328
-dos_file_tools_TEXT    CODE           AUTO           0000:057c       000002fc
-dos_memory_services_TEXT CODE         AUTO           0000:0878       00000116
-dos_services_TEXT      CODE           AUTO           0000:098e       00000091
-main_TEXT              CODE           AUTO           0000:0a1f       00002a02
+bios_clock_services_TEXT CODE         AUTO           0000:0000       0000005d
+bios_keyboard_services_TEXT CODE      AUTO           0000:005d       0000007e
+bios_memory_services_TEXT CODE        AUTO           0000:00db       0000002d
+bios_video_services_TEXT CODE         AUTO           0000:0108       00000155
+bios_video_services_constants_TEXT CODE AUTO         0000:025d       00000000
+dos_file_services_TEXT CODE           AUTO           0000:025d       00000328
+dos_file_tools_TEXT    CODE           AUTO           0000:0585       000002fc
+dos_memory_services_TEXT CODE         AUTO           0000:0881       00000116
+dos_services_TEXT      CODE           AUTO           0000:0997       00000091
+main_TEXT              CODE           AUTO           0000:0a28       00002a02
 _TEXT                  CODE           AUTO           0000:3430       00002fd2
 FAR_DATA               FAR_DATA       AUTO           0640:0002       00000000
 _NULL                  BEGDATA        DGROUP         0641:0000       00000020
@@ -66,55 +66,55 @@ Module: CMakeFiles/TEST.dir/Users/jeremythornton/dosbox/cspjst/DOSLIB/bioslib/sr
 0000:0000+     bios_read_system_clock_
 0000:0026+     bios_set_system_clock_
 Module: CMakeFiles/TEST.dir/Users/jeremythornton/dosbox/cspjst/DOSLIB/bioslib/src/BIOS/bios_keyboard_services.c.obj(/Users/jeremythornton/dosbox/cspjst/DOSLIB/bioslib/src/BIOS/bios_keyboard_services.c)
-0000:0054+     bios_wait_for_keystroke_and_read_
-0000:007a+     bios_get_keystroke_status_
-0000:00aa+     bios_get_keyboard_flags_
+0000:005d+     bios_wait_for_keystroke_and_read_
+0000:0083+     bios_get_keystroke_status_
+0000:00b3+     bios_get_keyboard_flags_
 Module: CMakeFiles/TEST.dir/Users/jeremythornton/dosbox/cspjst/DOSLIB/bioslib/src/BIOS/bios_memory_services.c.obj(/Users/jeremythornton/dosbox/cspjst/DOSLIB/bioslib/src/BIOS/bios_memory_services.c)
-0000:00d2+     bios_get_startup_memory_kb_
+0000:00db+     bios_get_startup_memory_kb_
 Module: CMakeFiles/TEST.dir/Users/jeremythornton/dosbox/cspjst/DOSLIB/bioslib/src/BIOS/bios_video_services.c.obj(/Users/jeremythornton/dosbox/cspjst/DOSLIB/bioslib/src/BIOS/bios_video_services.c)
-0000:00ff+     bios_set_video_mode_
-0000:0123+     bios_get_video_state_
-0000:0153+     bios_return_video_configuration_information_
-0000:019a+     bios_helper_video_subsytem_configuration_
-0000:01d4+     bios_video_subsystem_configuration_
+0000:0108+     bios_set_video_mode_
+0000:012c+     bios_get_video_state_
+0000:015c+     bios_return_video_configuration_information_
+0000:01a3+     bios_helper_video_subsytem_configuration_
+0000:01dd+     bios_video_subsystem_configuration_
 Module: CMakeFiles/TEST.dir/Users/jeremythornton/dosbox/cspjst/DOSLIB/bioslib/src/BIOS/bios_video_services_constants.c.obj(/Users/jeremythornton/dosbox/cspjst/DOSLIB/bioslib/src/BIOS/bios_video_services_constants.c)
 0641:12d8+     _bios_video_mode_names
 Module: CMakeFiles/TEST.dir/DOS/dos_file_services.c.obj(/Users/jeremythornton/dosbox/cspjst/DOSLIB/src/DOS/dos_file_services.c)
-0000:0254      dos_get_disk_free_space_
-0000:02b0      dos_create_file_
-0000:02f9      dos_open_file_
-0000:0342      dos_close_file_
-0000:037a      dos_read_file_
-0000:03ce      dos_write_file_
-0000:0422      dos_delete_file_
-0000:045b      dos_move_file_pointer_
-0000:04b6      dos_get_file_attributes_
-0000:04fb+     dos_set_file_attributes_
-0000:053b      dos_rename_file_
+0000:025d      dos_get_disk_free_space_
+0000:02b9      dos_create_file_
+0000:0302      dos_open_file_
+0000:034b      dos_close_file_
+0000:0383      dos_read_file_
+0000:03d7      dos_write_file_
+0000:042b      dos_delete_file_
+0000:0464      dos_move_file_pointer_
+0000:04bf      dos_get_file_attributes_
+0000:0504+     dos_set_file_attributes_
+0000:0544      dos_rename_file_
 Module: CMakeFiles/TEST.dir/DOS/dos_file_tools.c.obj(/Users/jeremythornton/dosbox/cspjst/DOSLIB/src/DOS/dos_file_tools.c)
-0000:057c      dos_file_exists_
-0000:05c7      dos_file_is_eof_
-0000:06ab      dos_file_size_
-0000:0775      dos_file_ext_
+0000:0585      dos_file_exists_
+0000:05d0      dos_file_is_eof_
+0000:06b4      dos_file_size_
+0000:077e      dos_file_ext_
 Module: CMakeFiles/TEST.dir/DOS/dos_memory_services.c.obj(/Users/jeremythornton/dosbox/cspjst/DOSLIB/src/DOS/dos_memory_services.c)
-0000:0878      dos_allocate_memory_blocks_
-0000:08d6      dos_free_allocated_memory_blocks_
-0000:0923      dos_get_free_memory_paragraphs_
+0000:0881      dos_allocate_memory_blocks_
+0000:08df      dos_free_allocated_memory_blocks_
+0000:092c      dos_get_free_memory_paragraphs_
 Module: CMakeFiles/TEST.dir/DOS/dos_services.c.obj(/Users/jeremythornton/dosbox/cspjst/DOSLIB/src/DOS/dos_services.c)
-0000:098e      dos_set_interrupt_vector_
-0000:09b8      dos_get_interrupt_vector_
-0000:09ff      dos_terminate_process_with_return_code_
+0000:0997      dos_set_interrupt_vector_
+0000:09c1      dos_get_interrupt_vector_
+0000:0a08      dos_terminate_process_with_return_code_
 Module: CMakeFiles/TEST.dir/main.c.obj(/Users/jeremythornton/dosbox/cspjst/DOSLIB/src/main.c)
-0000:0a1f+     test_dos_files_
-0000:2a3f+     test_allocate_memory_
-0000:2ca0+     test_free_memory_
-0000:2e43+     test_get_free_memory_
-0000:308b+     test_dos_memory_
-0000:30ca+     test_interrupt_vectors_
-0000:3302+     test_terminate_process_
-0000:339d+     test_dos_services_
-0000:33ba+     test_dos_
-0000:33e2      main_
+0000:0a28+     test_dos_files_
+0000:2a48+     test_allocate_memory_
+0000:2ca9+     test_free_memory_
+0000:2e4c+     test_get_free_memory_
+0000:3094+     test_dos_memory_
+0000:30d3+     test_interrupt_vectors_
+0000:330b+     test_terminate_process_
+0000:33a6+     test_dos_services_
+0000:33c3+     test_dos_
+0000:33eb      main_
 Module: /opt/watcom/lib286/dos/clibl.lib(cmodel)
 0000:3430      _big_code_
 0000:3430*     CodeModelMismatch
@@ -366,4 +366,4 @@ Module: /opt/watcom/lib286/dos/clibl.lib(doserror)
 Stack size:  0800 (2048.)
 Memory size:  87b0 (34736.)
 Entry point address: 0000:383c
-Link time: 00:00.68
+Link time: 00:00.88
