@@ -68,34 +68,47 @@ void test_terminate_process(void) {
 }
 
 void test_time_date() {
-    dos_time_t t = {0};
-    dos_date_t d = {0};
+    dos_time_t t1, t2 = {0};
+    dos_date_t d1, d2 = {0};
     char time[] = "01234567";
     char date[] = "0123456789";
 
-    dos_get_time(&t);
-    dos_get_date(&d);
-    dos_time_to_str(&t, time, ':');
-    dos_date_to_str(&d, date, '/');
+    dos_get_time(&t1);
+    dos_get_date(&d1);
+    t2 = t1;
+    d2 = d1;
+    dos_time_to_str(&t2, time, ':');
+    dos_date_to_str(&d2, date, '/');
     printf("%s\n", time);
     printf("%s\n", date);
 
-    d.day = 1;
-    d.month = 2;
-    d.year = 0;
-    assert(dos_set_date(&d) == DOS_INVALID_DATA);
+    t2.hour = 25;
+    t2.minutes = 70;
+    t2.seconds = 3;
+    //assert(dos_set_time(&t2) == DOS_INVALID_DATA);
 
-    d.day = 1;
-    d.month = 2;
-    d.year = 1986;
-    assert(dos_set_date(&d) == 0);
+    t2.hour = 1;
+    t2.minutes = 2;
+    t2.seconds = 3;
+    assert(dos_set_time(&t2) == 0);
 
-    dos_get_time(&t);
-    dos_get_date(&d);
-    dos_time_to_str(&t, time, ':');
-    dos_date_to_str(&d, date, '/');
+    d2.day = 1;
+    d2.month = 2;
+    d2.year = 0;
+    assert(dos_set_date(&d2) == DOS_INVALID_DATA);
+
+    d2.year = 1986;
+    assert(dos_set_date(&d2) == 0);
+
+    dos_get_time(&t2);
+    dos_get_date(&d2);
+    dos_time_to_str(&t2, time, ':');
+    dos_date_to_str(&d2, date, '/');
     printf("%s\n", time);
     printf("%s\n", date);
+
+    assert(dos_set_time(&t1) == 0);
+    assert(dos_set_date(&d1) == 0);
 }
 
 void test_dos_services(void) {

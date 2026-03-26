@@ -60,9 +60,9 @@ void dos_get_date(dos_date_t* date);
 // 2B  Set date
 dos_error_code_t dos_set_date(const dos_date_t* date);
 // 2C  Get time
-void dos_get_time(dos_time_t* date);
+void dos_get_time(dos_time_t* time);
 // 2D  Set time
-dos_error_code_t dos_set_time(const dos_time_t* date);
+dos_error_code_t dos_set_time(const dos_time_t* time);
 
 // 30  Get DOS version number
 // 31  Terminate process and remain resident

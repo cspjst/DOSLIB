@@ -106,10 +106,10 @@ void dos_get_date(dos_date_t* date) {
         mov     ah, DOS_GET_DATE
         int     DOS_SERVICE
         les     di, date                    ; copy pointer to date into ES:DI
-        stosb                               ; fill the date struct...
-        mov     [di], cx
-        mov     [di + 2], dh
-        mov     [di + 3], dl
+        stosb                               ; dotw
+        mov     [di], cx                    ; year
+        mov     [di + 2], dh                ; month
+        mov     [di + 3], dl                ; day
 
         pop     ds
         popf
@@ -143,9 +143,9 @@ dos_error_code_t dos_set_date(const dos_date_t* date) {
         push    ds                          ; due to unreliable behaviour
 
         les     di, date                    ; copy pointer to date into ES:DI
-        mov     cx, [di + 1]                ; copy the data struct...
-        mov     dh, [di + 3]
-        mov     dl, [di + 4]
+        mov     cx, [di + 1]                ; year
+        mov     dh, [di + 3]                ; month
+        mov     dl, [di + 4]                ; day
         mov     ah, DOS_SET_DATE
         int     DOS_SERVICE
         test    al, al                      ; AL = 00 if date change successful
@@ -162,6 +162,13 @@ dos_error_code_t dos_set_date(const dos_date_t* date) {
 /**
  * @brief INT 21,2C - Get Time - retrieves DOS maintained clock time
  *
+ * typedef struct {
+ *  unsigned char   hour;       // CH = hour (0-23)
+ * 	unsigned char   minutes;    // CL = minutes (0-59)
+ * 	unsigned char   seconds;    // DH = seconds (0-59)
+ * 	unsigned char   hundredths; // DL = hundredths (0-99)
+ * } dos_time_t;
+ *
  * AH = 2C
  * on return:
  * CH = hour (0-23)
@@ -169,8 +176,22 @@ dos_error_code_t dos_set_date(const dos_date_t* date) {
  * DH = seconds (0-59)
  * DL = hundredths (0-99)
  */
-void dos_get_time(dos_time_t* date) {
+void dos_get_time(dos_time_t* time) {
+    __asm {
+        .8086
+        pushf                               ; preserve what int 21h may not
+        push    ds                          ; due to unreliable behaviour
 
+        mov     ah, DOS_GET_TIME
+        int     DOS_SERVICE
+        les     di, time                    ; copy pointer to time into ES:DI
+        mov     [di], ch                    ; hour
+        mov     [di + 1], cl                ; minutes
+        mov     [di + 2], dh                ; seconds
+        mov     [di + 2], dh                ; hundredths
+        pop     ds
+        popf
+    }
 }
 
 /**
@@ -187,8 +208,27 @@ void dos_get_time(dos_time_t* date) {
  * AL = 00 if time change successful
  *    = FF if time invalid
  */
-dos_error_code_t dos_set_time(const dos_time_t* date) {
-    dos_error_code_t errno = 0;
+dos_error_code_t dos_set_time(const dos_time_t* time) {
+    dos_error_code_t errno = DOS_INVALID_DATA;
+    __asm {
+        .8086
+        pushf                               ; preserve what int 21h may not
+        push    ds                          ; due to unreliable behaviour
+
+        les     di, time                    ; copy pointer to time into ES:DI
+        mov     ch, [di]                    ; hour
+        mov     dh, [di + 1]                ; minutes
+        mov     dh, [di + 2]                ; seconds
+        mov     dl, [di + 3]                ; hundredths
+        mov     ah, DOS_SET_TIME
+        int     DOS_SERVICE
+        test    al, al                      ; AL = 00 if date change successful
+        jnz     END
+        mov     errno, 0
+
+ END:   pop     ds
+        popf
+    }
 
     return errno;
 }
