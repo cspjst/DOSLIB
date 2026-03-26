@@ -83,3 +83,44 @@ void dos_terminate_process_with_return_code(unsigned char return_code) {
         // program ends here - no return
     }
 }
+
+
+void dos_get_date(dos_date_t* date) {
+
+}
+
+dos_error_code_t dos_set_date(const dos_date_t* date) {
+
+}
+
+/**
+ * @brief INT 21,2C - Get Time - retrieves DOS maintained clock time
+ *
+ * AH = 2C
+ * on return:
+ * CH = hour (0-23)
+ * CL = minutes (0-59)
+ * DH = seconds (0-59)
+ * DL = hundredths (0-99)
+ */
+void dos_get_time(dos_time_t* date) {
+
+}
+
+/**
+ * @brief
+ * INT 21,2D - Set Time - changes DOS maintained clock
+ * @note DOS version 3.3+ also update CMOS clock where applicable
+ *
+ * AH = 2D
+ * CH = hour (0-23)
+ * CL = minutes (0-59)
+ * DH = seconds (0-59)
+ * DL = hundredths (0-99)
+ * on return:
+ * AL = 00 if time change successful
+ *    = FF if time invalid
+ */
+dos_error_code_t dos_get_time(dos_time_t* date) {
+
+}

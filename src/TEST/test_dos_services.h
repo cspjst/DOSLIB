@@ -10,6 +10,7 @@
 #include <assert.h>
 
 #include "../DOS/dos_services.h"
+#include "../DOS/dos_services_tools.h"
 
 /* Safe interrupt vectors for testing (60h-67h are user-available in DOS) */
 #define TEST_VECTOR_1 0x60
@@ -66,9 +67,26 @@ void test_terminate_process(void) {
     }
 }
 
+void test_time_date() {
+    dos_time_t t = {0};
+    dos_date_t d = {0};
+    char time[] = "01234567";
+    char date[] = "0123456789";
+
+    dos_get_time(&t);
+    dos_get_date(&d);
+    dos_time_to_str(&t, time, ':');
+    dos_date_to_str(&d, date, '/');
+
+    printf("%s\n", time);
+    printf("%s\n", date);
+
+}
+
 void test_dos_services(void) {
     test_interrupt_vectors();
     test_terminate_process();
+    test_time_date();
 }
 
 #endif

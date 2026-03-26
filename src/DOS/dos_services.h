@@ -8,6 +8,9 @@
 #ifndef DOS_SERVICES_H
 #define DOS_SERVICES_H
 
+#include "dos_error_types.h"
+#include "dos_services_types.h"
+
 // 0  Program terminate
 // 1  Keyboard input with echo
 // 2  Display output
@@ -51,10 +54,15 @@ void dos_set_interrupt_vector(unsigned char vec_num, void* phandler);
 // 27  Random block read using FCB
 // 28  Random block write using FCB
 // 29  Parse filename for FCB
+
 // 2A  Get date
+void dos_get_date(dos_date_t* date);
 // 2B  Set date
+dos_error_code_t dos_set_date(const dos_date_t* date);
 // 2C  Get time
+void dos_get_time(dos_time_t* date);
 // 2D  Set time
+dos_error_code_t dos_set_time(const dos_time_t* date);
 
 // 30  Get DOS version number
 // 31  Terminate process and remain resident
