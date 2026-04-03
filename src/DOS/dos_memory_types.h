@@ -34,4 +34,28 @@ typedef struct {
     dos_address_t end;
 } dos_mem_block_t;
 
+/**
+ * MCB Fields
+ *  Address     Memory Control Blaock Fields
+ *              Chain ID    PID     size    unused
+ *  yyy0:000       0        1-2     3-4     5-15
+ *
+ * ID = MCB chain-identification byte.
+ * Its value is Z for the last MCB in DOS MCB chain and M otherwise
+ *
+ * PID  = Process ID, or the program segment prefix of the program
+ * that "owns" the MCB and the memory it controls.
+ * size = Size of the contiguous block of memeory controlled by the
+ * MCB in units of paragraphs.
+ * @note It does not include the MCB itself.
+ */
+#pragma pack(1)
+typedef struct {
+    unsigned char chain_id;     // 'Z' for last, 'M' otherwise
+    unsigned short pid;         // Process ID (PSP segment)
+    unsigned short block_size;  // Size in paragraphs (16-byte units)
+    unsigned char reserved[11]; // Unused/reserved bytes
+} dos_mcb_t;
+#pragma pack()
+
 #endif
