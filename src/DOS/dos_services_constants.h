@@ -130,4 +130,8 @@
 #define IVIDEO						16
 #define IEQUIPMENT_DETERMINATION	17
 
+// Undocumented table of pointers used by DOS (varies with DOS version)
+#define DOS_INVARS_MCB      -2      // word   segment of first Memory Control Block (MCB)
+
+
 #endif

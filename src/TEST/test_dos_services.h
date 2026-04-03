@@ -11,6 +11,8 @@
 
 #include "../DOS/dos_services.h"
 #include "../DOS/dos_services_tools.h"
+#include "../DOS/dos_memory_types.h"
+#include "../DOS/dos_services_constants.h"
 
 /* Safe interrupt vectors for testing (60h-67h are user-available in DOS) */
 #define TEST_VECTOR_1 0x60
@@ -111,10 +113,18 @@ void test_time_date() {
     assert(dos_set_date(&d1) == 0);
 }
 
+void test_mcb() {
+    dos_address_t addr = {0};
+    addr.ptr = dos_undoc_get_ptr_invars();
+    addr.memloc += DOS_INVARS_MCB;
+    assert(*(char*)addr.ptr == 'M');
+}
+
 void test_dos_services(void) {
     test_interrupt_vectors();
     test_terminate_process();
     test_time_date();
+    test_mcb();
 }
 
 #endif
