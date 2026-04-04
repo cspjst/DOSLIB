@@ -11,6 +11,8 @@
 
 #include "../DOS/dos_services.h"
 #include "../DOS/dos_services_tools.h"
+#include "../DOS/dos_memory_types.h"
+#include "../DOS/dos_services_constants.h"
 
 /* Safe interrupt vectors for testing (60h-67h are user-available in DOS) */
 #define TEST_VECTOR_1 0x60
@@ -111,10 +113,41 @@ void test_time_date() {
     assert(dos_set_date(&d1) == 0);
 }
 
+void test_mcb() {
+    dos_address_t addr = {0};
+    addr.ptr = dos_undoc_get_ptr_invars();
+    if (!addr.ptr) {
+        printf("invars lookup failed\n");
+        return;
+    }
+    printf("invars %p\n", addr.ptr);
+
+    char* p = (char*)addr.ptr;
+    printf("ptr %p\n", p);
+    p -= 2;  /* Large model: far pointer arithmetic handles seg/off crossing */
+    printf("ptr-2 %p\n", p);
+
+    /* FIX 1: Cast to unsigned short* to read a WORD (2 bytes), not a BYTE */
+    addr.segoff.segment = *(unsigned short*)p;
+    addr.segoff.offset = 0;
+
+    p = (char*)addr.ptr;
+    printf("MCB start %p\n", p);
+
+    /* FIX 2: Index into p so we actually walk the 16 bytes */
+    for(int i = 0; i < 16; ++i) {
+        unsigned char c = (unsigned char)p[i];
+        printf("%c", (c >= 32 && c < 127) ? c : '.');
+    }
+    printf("\n");
+    assert(p[0]=='M');
+}
+
 void test_dos_services(void) {
     test_interrupt_vectors();
     test_terminate_process();
     test_time_date();
+    test_mcb();
 }
 
 #endif

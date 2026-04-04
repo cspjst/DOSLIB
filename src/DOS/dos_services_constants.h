@@ -93,7 +93,7 @@
 #define DOS_FIND_NEXT_MATCHING_FILE
 #define DOS_SET_CURRENT_PROCESS_ID   						// UNDOCUMENTED
 #define DOS_GET_CURRENT_PROCESS_ID   						// UNDOCUMENTED
-#define DOS_GET_POINTER_TO_DOS_INVARS						// UNDOCUMENTED
+#define DOS_GET_POINTER_TO_DOS_INVARS						52h     // UNDOCUMENTED
 #define DOS_GENERATE_DRIVE_PARAMETER_TABLE  				// UNDOCUMENTED
 #define DOS_GET_VERIFY_SETTING
 #define DOS_CREATE_PSP										// UNDOCUMENTED
@@ -129,5 +129,9 @@
 #define	IDISKETTE					14
 #define IVIDEO						16
 #define IEQUIPMENT_DETERMINATION	17
+
+// Undocumented table of pointers used by DOS (varies with DOS version)
+#define DOS_INVARS_MCB      -2      // word   segment of first Memory Control Block (MCB)
+
 
 #endif

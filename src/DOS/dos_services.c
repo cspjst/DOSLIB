@@ -4,6 +4,7 @@
 * @version     0.1.0
 */
 #include "dos_services.h"
+#include "dos_memory_types.h"
 #include "dos_services_types.h"
 #include "dos_services_constants.h"
 #include "dos_error_types.h"
@@ -231,4 +232,48 @@ dos_error_code_t dos_set_time(const dos_time_t* time) {
     }
 
     return errno;
+}
+
+/**
+ * AH = 52h on return:
+ * ES:BX = pointer to DOS "invars", a table of pointers used by DOS (varies with DOS version):
+ *
+ * Offset Size		 Description
+ *
+ *  -12   word   sharing retry count (DOS 3.1-3.3)
+ *  -10   word   sharing retry delay  (DOS 3.1-3.3)
+ *   -8   dword  pointer to current disk buffer (DOS 3.x)
+ *   -4   word   pointer in DOS code segment of unread CON input 0 indicates no unread input (DOS 3.x)
+ *   -2   word   segment of first Memory Control Block (MCB)
+ *   00   dword  pointer to first DRIVE PARAMETER TABLE (A:) in chain
+ *   04   dword  pointer to DOS System File Table (SFT)
+ *   08   dword  pointer to $CLOCK device driver
+ *   0C   dword  pointer to CON device driver
+ *   10   byte   number of logical drives in system
+ *   11   word   maximum bytes/block of any block device
+ *   13   dword  pointer to DOS cache buffer header
+ *   17 18bytes  NUL device header, first 4 bytes of device header point to the next device in device chain
+ */
+void* dos_undoc_get_ptr_invars() {
+    dos_address_t addr = {0};
+    unsigned short pseg, poff;
+    pseg = poff = 0;
+    __asm {
+        .8086
+        pushf                               ; preserve what int 21h may not
+        push    ds                          ; due to unreliable behaviour
+
+        mov     ah, DOS_GET_POINTER_TO_DOS_INVARS   ; 52h
+        int     DOS_SERVICE                 ; 21h
+        jc      END                         ; error
+        mov     ax, es
+        mov     pseg, ax
+        mov     poff, bx
+
+END:    pop     ds
+        popf
+    }
+    addr.segoff.segment = pseg;
+    addr.segoff.offset = poff;
+    return addr.ptr;
 }

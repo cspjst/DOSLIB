@@ -82,7 +82,10 @@ void dos_terminate_process_with_return_code(unsigned char return_code);
 
 // 50  Set current process id (undocumented)
 // 51  Get current process id (undocumented)
+
 // 52  Get pointer to DOS "INVARS" (undocumented)
+void* dos_undoc_get_ptr_invars();
+
 // 53  Generate drive parameter table (undocumented)
 
 // 55  Create PSP (undocumented)
