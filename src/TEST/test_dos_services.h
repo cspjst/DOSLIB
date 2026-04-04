@@ -116,8 +116,31 @@ void test_time_date() {
 void test_mcb() {
     dos_address_t addr = {0};
     addr.ptr = dos_undoc_get_ptr_invars();
-    addr.memloc += DOS_INVARS_MCB;
-    assert(*(char*)addr.ptr == 'M');
+    if (!addr.ptr) {
+        printf("invars lookup failed\n");
+        return;
+    }
+    printf("invars %p\n", addr.ptr);
+
+    char* p = (char*)addr.ptr;
+    printf("ptr %p\n", p);
+    p -= 2;  /* Large model: far pointer arithmetic handles seg/off crossing */
+    printf("ptr-2 %p\n", p);
+
+    /* FIX 1: Cast to unsigned short* to read a WORD (2 bytes), not a BYTE */
+    addr.segoff.segment = *(unsigned short*)p;
+    addr.segoff.offset = 0;
+
+    p = (char*)addr.ptr;
+    printf("MCB start %p\n", p);
+
+    /* FIX 2: Index into p so we actually walk the 16 bytes */
+    for(int i = 0; i < 16; ++i) {
+        unsigned char c = (unsigned char)p[i];
+        printf("%c", (c >= 32 && c < 127) ? c : '.');
+    }
+    printf("\n");
+    assert(p[0]=='M');
 }
 
 void test_dos_services(void) {

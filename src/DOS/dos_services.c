@@ -4,6 +4,7 @@
 * @version     0.1.0
 */
 #include "dos_services.h"
+#include "dos_memory_types.h"
 #include "dos_services_types.h"
 #include "dos_services_constants.h"
 #include "dos_error_types.h"
@@ -254,5 +255,25 @@ dos_error_code_t dos_set_time(const dos_time_t* time) {
  *   17 18bytes  NUL device header, first 4 bytes of device header point to the next device in device chain
  */
 void* dos_undoc_get_ptr_invars() {
+    dos_address_t addr = {0};
+    unsigned short pseg, poff;
+    pseg = poff = 0;
+    __asm {
+        .8086
+        pushf                               ; preserve what int 21h may not
+        push    ds                          ; due to unreliable behaviour
 
+        mov     ah, DOS_GET_POINTER_TO_DOS_INVARS   ; 52h
+        int     DOS_SERVICE                 ; 21h
+        jc      END                         ; error
+        mov     ax, es
+        mov     pseg, ax
+        mov     poff, bx
+
+END:    pop     ds
+        popf
+    }
+    addr.segoff.segment = pseg;
+    addr.segoff.offset = poff;
+    return addr.ptr;
 }
