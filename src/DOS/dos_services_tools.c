@@ -42,12 +42,12 @@ char* dos_date_to_str(const dos_date_t* d, char* buf, char sep) {
     return buf;
 }
 
-char* dos_get_first_mcb() {
+void* dos_get_first_mcb() {
     void* invars = dos_undoc_get_ptr_invars();
     if (!invars) return invars;
     dos_address_t addr;
     // the segment word ia at invars - 2
     addr.segoff.segment = *(unsigned short*)((char*)invars - 2);
     addr.segoff.offset = 0;
-    return (char*)addr.ptr;
+    return addr.ptr;
 }
