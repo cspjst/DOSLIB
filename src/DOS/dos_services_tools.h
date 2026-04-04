@@ -11,4 +11,6 @@ char* dos_time_to_str(const dos_time_t* t, char* buf, char sep);
 
 char* dos_date_to_str(const dos_date_t* d, char* buf, char sep);
 
+char* dos_get_first_mcb();
+
 #endif

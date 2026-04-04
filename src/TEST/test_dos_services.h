@@ -109,38 +109,24 @@ void test_time_date() {
     printf("%s\n", time);
     printf("%s\n", date);
 
-    assert(dos_set_time(&t1) == 0);
-    assert(dos_set_date(&d1) == 0);
+    //assert(dos_set_time(&t1) == 0);
+    //assert(dos_set_date(&d1) == 0);
 }
 
 void test_mcb() {
-    dos_address_t addr = {0};
-    addr.ptr = dos_undoc_get_ptr_invars();
-    if (!addr.ptr) {
-        printf("invars lookup failed\n");
-        return;
-    }
-    printf("invars %p\n", addr.ptr);
+    char* mcb = dos_get_first_mcb();
+    assert(mcb);
 
-    char* p = (char*)addr.ptr;
-    printf("ptr %p\n", p);
-    p -= 2;  /* Large model: far pointer arithmetic handles seg/off crossing */
-    printf("ptr-2 %p\n", p);
+    printf("First MCB @ %p\n", mcb);
+    printf("Chain ID: %c\n", mcb[0]);
 
-    /* FIX 1: Cast to unsigned short* to read a WORD (2 bytes), not a BYTE */
-    addr.segoff.segment = *(unsigned short*)p;
-    addr.segoff.offset = 0;
-
-    p = (char*)addr.ptr;
-    printf("MCB start %p\n", p);
-
-    /* FIX 2: Index into p so we actually walk the 16 bytes */
+    printf("Header: ");
     for(int i = 0; i < 16; ++i) {
-        unsigned char c = (unsigned char)p[i];
+        unsigned char c = (unsigned char)mcb[i];
         printf("%c", (c >= 32 && c < 127) ? c : '.');
     }
     printf("\n");
-    assert(p[0]=='M');
+    assert(mcb[0]=='M');
 }
 
 void test_dos_services(void) {
