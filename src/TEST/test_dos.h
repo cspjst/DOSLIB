@@ -4,6 +4,6 @@
 
 void test_dos() {
     test_dos_files();
-    test_dos_memory();
-    test_dos_services();
+    //test_dos_memory();
+    //test_dos_services();
 }

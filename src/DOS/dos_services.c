@@ -55,8 +55,8 @@ void* dos_get_interrupt_vector(unsigned char vec_num) {
         mov     ah, DOS_GET_INTERRUPT_VECTOR    ; 35h service
         int     DOS_SERVICE
         lea     di, phandler
-        mov     [di], bx                    ; copy segment into address_t (little endian)
-        mov     [di + 2] , es               ; copy offset
+        mov     [di], bx                    ; copy offset
+        mov     [di + 2] , es               ; copy segment into address_t (little endian)
 
         pop     ds
         popf
@@ -137,7 +137,7 @@ void dos_get_date(dos_date_t* date) {
  *    = FF if invalid date
  */
 dos_error_code_t dos_set_date(const dos_date_t* date) {
-    dos_error_code_t errno = DOS_INVALID_DATA;
+    dos_error_code_t _errno = DOS_INVALID_DATA;
     __asm {
         .8086
         pushf                               ; preserve what int 21h may not
@@ -151,13 +151,13 @@ dos_error_code_t dos_set_date(const dos_date_t* date) {
         int     DOS_SERVICE
         test    al, al                      ; AL = 00 if date change successful
         jnz     END
-        mov     errno, 0
+        mov     _errno, 0
 
  END:   pop     ds
         popf
     }
 
-    return errno;
+    return _errno;
 }
 
 /**
@@ -189,7 +189,7 @@ void dos_get_time(dos_time_t* time) {
         mov     [di], ch                    ; hour
         mov     [di + 1], cl                ; minutes
         mov     [di + 2], dh                ; seconds
-        mov     [di + 2], dh                ; hundredths
+        mov     [di + 3], dl                ; hundredths
         pop     ds
         popf
     }
@@ -210,7 +210,7 @@ void dos_get_time(dos_time_t* time) {
  *    = FF if time invalid
  */
 dos_error_code_t dos_set_time(const dos_time_t* time) {
-    dos_error_code_t errno = DOS_INVALID_DATA;
+    dos_error_code_t _errno = DOS_INVALID_DATA;
     __asm {
         .8086
         pushf                               ; preserve what int 21h may not
@@ -218,20 +218,20 @@ dos_error_code_t dos_set_time(const dos_time_t* time) {
 
         les     di, time                    ; copy pointer to time into ES:DI
         mov     ch, [di]                    ; hour
-        mov     dh, [di + 1]                ; minutes
+        mov     cl, [di + 1]                ; minutes
         mov     dh, [di + 2]                ; seconds
         mov     dl, [di + 3]                ; hundredths
         mov     ah, DOS_SET_TIME
         int     DOS_SERVICE
         test    al, al                      ; AL = 00 if date change successful
         jnz     END
-        mov     errno, 0
+        mov     _errno, 0
 
  END:   pop     ds
         popf
     }
 
-    return errno;
+    return _errno;
 }
 
 /**

@@ -8,6 +8,7 @@
 #include "dos_error_types.h"
 #include "dos_file_services.h"
 #include "dos_file_types.h"
+#include "dos_file_constants.h"
 
 unsigned char dos_file_exists(const char* path_name) {
     dos_file_attributes_t attr;

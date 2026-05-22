@@ -15,6 +15,7 @@
 #include "../DOS/dos_file_services.h"
 #include "../DOS/dos_error_types.h"
 #include "../DOS/dos_file_services.h"
+#include "../DOS/dos_file_constants.h"
 
 void test_dos_files() {
     printf("Testing DOS file functions...\n");
@@ -357,6 +358,61 @@ void test_dos_files() {
     printf("Empty string -> NULL\n");
     assert(dos_file_ext(NULL) == NULL);
     printf("NULL -> NULL\n");
+
+    // Test 18: DTA get and set
+    printf("18. Testing DTA get and set...\n");
+    dos_dta_t dta;
+    dos_dta_t* dta_ptr = NULL;
+
+    err = dos_set_dta(&dta);
+    assert(err == 0);
+    printf("DTA set successfully\n");
+
+    err = dos_get_dta(&dta_ptr);
+    assert(err == 0);
+    assert(dta_ptr == &dta);
+    printf("DTA get verified - pointer matches\n");
+
+    // Test 19: Find first and next
+    printf("19. Testing find first and next...\n");
+
+    // create known files to find
+    dos_file_handle_t fh1, fh2, fh3;
+    dos_create_file("FIND1.TXT", CREATE_READ_WRITE, &fh1);
+    dos_create_file("FIND2.TXT", CREATE_READ_WRITE, &fh2);
+    dos_create_file("FIND3.TXT", CREATE_READ_WRITE, &fh3);
+    dos_close_file(fh1);
+    dos_close_file(fh2);
+    dos_close_file(fh3);
+
+    // find first
+    err = dos_find_first_file("FIND*.TXT", FIND_NORMAL, &dta);
+    assert(err == 0);
+    printf("Found first: %s\n", dta.filename);
+
+    // find next x2
+    err = dos_find_next_file();
+    assert(err == 0);
+    printf("Found next: %s\n", dta.filename);
+
+    err = dos_find_next_file();
+    assert(err == 0);
+    printf("Found next: %s\n", dta.filename);
+
+    // find next should now be exhausted
+    err = dos_find_next_file();
+    assert(err != 0);
+    printf("Find next correctly exhausted (error: %d)\n", err);
+
+    // find non-existent filespec
+    err = dos_find_first_file("NOTHING.XYZ", FIND_NORMAL, &dta);
+    assert(err != 0);
+    printf("Non-existent filespec correctly handled (error: %d)\n", err);
+
+    dos_delete_file("FIND1.TXT");
+    dos_delete_file("FIND2.TXT");
+    dos_delete_file("FIND3.TXT");
+    printf("Find first/next tests passed\n");
 
     printf("DOS file functions tests passed\n\n");
 }

@@ -15,9 +15,11 @@
 // ...
 // 19  Get current default drive
 // 1A  Set disk transfer address
+dos_error_code_t dos_set_dta(dos_dta_t* find_data);
 // ...
 // 2E  Set/reset verify switch
 // 2F  Get disk transfer address
+dos_error_code_t dos_get_dta(dos_dta_t** find_data);
 // 36  Get disk free space
 dos_error_code_t dos_get_disk_free_space(unsigned char drive_number, dos_file_disk_space_info_t* info);
 
@@ -58,7 +60,9 @@ dos_error_code_t dos_set_file_attributes(const char* path_name, dos_file_attribu
 // 47  Get current directory
 // ...
 // 4E  Find first matching file
+dos_error_code_t dos_find_first_file(const char* filespec, dos_file_attributes_t attributes, dos_dta_t* dta);
 // 4F  Find next matching file
+dos_error_code_t dos_find_next_file(void);
 // ...
 // 54  Get verify setting
 // 56  Rename file
