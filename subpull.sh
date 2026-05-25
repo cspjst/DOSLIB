@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
-git submodule update --remote --recursive --merge
+git -C bioslib checkout main
+git submodule update --remote --merge
 git add bioslib
-git commit -m "Sync submodules to latest"
+git commit -m "Sync BIOSLIB to latest" || echo "Already up to date"
