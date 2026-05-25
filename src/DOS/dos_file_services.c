@@ -1,7 +1,7 @@
 /**
 * @author      Jeremy Simon Thornton
 * @copyright   2024, 2025,2026 Jeremy Simon Thornton
-* @version     0.5.1
+*
 */
 #include "dos_file_services.h"
 #include "dos_error_types.h"

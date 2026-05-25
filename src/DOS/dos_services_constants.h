@@ -1,7 +1,7 @@
 /**
 * @author      Jeremy Simon Thornton
 * @copyright   2024, 2025, 2026 Jeremy Simon Thornton
-* @version     0.1.0
+*
 */
 #ifndef DOS_SERVICES_CONSTANTS_H
 #define DOS_SERVICES_CONSTANTS_H

@@ -1,7 +1,7 @@
 /**
  * @author      Jeremy Simon Thornton
  * @copyright   2024, 2025, 2026 Jeremy Simon Thornton
- * @version     0.2.0
+ *
  * @url https://www.stanislavs.org/helppc/
  * @note all functions return dos_error_code_t the caller should test against DOS_SUCCESS
  * @see dos_perror and dos_strerror in dos_error.h and dos_error_codes.h

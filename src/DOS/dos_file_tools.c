@@ -1,7 +1,7 @@
 /**
 * @author      Jeremy Simon Thornton
 * @copyright   2024 Jeremy Simon Thornton
-* @version     0.2.0
+*
 * @note functions that depend upon dos_file_services.h return dos_error_code_t
 *
 */

@@ -1,7 +1,7 @@
 /**
 * @author      Jeremy Simon Thornton
 * @copyright   2024, 2025, 2026 Jeremy Simon Thornton
-* @version     0.4.0
+*
 */
 #include "dos_services_tools.h"
 #include "dos_services.h"
