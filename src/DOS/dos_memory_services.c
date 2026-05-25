@@ -1,11 +1,12 @@
 /**
 * @author      Jeremy Simon Thornton
-* @copyright   2024 Jeremy Simon Thornton
-* @version     0.1.0
+* @copyright   2024, 2025, 2026 Jeremy Simon Thornton
+* @version     0.2.0
 */
 #include "dos_memory_services.h"
 #include "../DOS/dos_error_types.h"
 #include "../DOS/dos_services_constants.h"
+#include "../DOS/dos_error_codes.h"
 
 /**
 * @brief INT 21,48 - Allocate Memory
@@ -43,8 +44,7 @@
 */
 dos_error_code_t dos_allocate_memory_blocks(unsigned short paragraphs, unsigned short* segment) {
     if (!segment) return DOS_INVALID_DATA;
-
-    dos_error_code_t err_code = 0;
+    dos_error_code_t ecode = 0;
     __asm {
         .8086
         pushf
@@ -54,7 +54,7 @@ dos_error_code_t dos_allocate_memory_blocks(unsigned short paragraphs, unsigned 
         mov     ah, DOS_ALLOCATE_MEMORY_BLOCKS  ; allocate memory
         int     DOS_SERVICE                 ; 48h service
         jnc     OK                          ; success CF = 0
-        mov     err_code, ax                ; CF set, and AX = 08 (Not Enough Mem)
+        mov     ecode, ax                ; CF set, and AX = 08 (Not Enough Mem)
         xor     ax, ax
 OK:     les     di, segment
         stosw
@@ -62,7 +62,7 @@ OK:     les     di, segment
         pop     ds
         popf
     }
-    return err_code;
+    return ecode;
 }
 
 /**
@@ -84,10 +84,9 @@ OK:     les     di, segment
 *  other .COM files take all available memory when they load.
 * @see  INT 21,4A
 */
-unsigned short dos_free_allocated_memory_blocks(unsigned short segment) {
-if (!segment) return DOS_INVALID_DATA;
-
-    dos_error_code_t err_code = 0;
+dos_error_code_t dos_free_allocated_memory_blocks(unsigned short segment) {
+    if (!segment) return DOS_INVALID_DATA;
+    dos_error_code_t ecode = 0;
     __asm {
         .8086
         pushf
@@ -98,12 +97,12 @@ if (!segment) return DOS_INVALID_DATA;
         mov     ah, DOS_FREE_ALLOCATED_MEMORY_BLOCKS    ; de-allocate memory
         int     DOS_SERVICE                         ; dos call 49h
         jnc     OK                                  ; success CF = 0
-        mov     err_code, ax                        ; de-allocation failed ax is dos error code
+        mov     ecode, ax                        ; de-allocation failed ax is dos error code
     OK:
         pop     ds
         popf
     }
-    return err_code;
+    return ecode;
 }
 
 /**
@@ -115,8 +114,7 @@ if (!segment) return DOS_INVALID_DATA;
  */
 dos_error_code_t dos_get_free_memory_paragraphs(unsigned short* free) {
     if (!free) return DOS_INVALID_DATA;
-
-    dos_error_code_t err_code = 0;
+    dos_error_code_t ecode = 0;
     __asm {
         .8086
         pushf
@@ -125,7 +123,7 @@ dos_error_code_t dos_get_free_memory_paragraphs(unsigned short* free) {
         mov     bx, 0FFFFh                  ; number requested paragraphs
         mov     ah, DOS_ALLOCATE_MEMORY_BLOCKS  ; allocate memory
         int     DOS_SERVICE                 ; 48h service
-        mov     err_code, ax                ; CF set, and AX = 08 (Not Enough Mem)
+        mov     ecode, ax                ; CF set, and AX = 08 (Not Enough Mem)
         les     di, free
         mov     es:[di], bx                ; size in paras of the largest block of low memory available
 
@@ -133,8 +131,8 @@ dos_error_code_t dos_get_free_memory_paragraphs(unsigned short* free) {
         popf
     }
     // Treat "insufficient memory" as success for this query hack
-    if (err_code == DOS_INSUFFICIENT_MEMORY) {
+    if (ecode == DOS_INSUFFICIENT_MEMORY) {
         return DOS_SUCCESS;
     }
-    return err_code;
+    return ecode;
 }

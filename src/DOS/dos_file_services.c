@@ -1,10 +1,11 @@
 /**
 * @author      Jeremy Simon Thornton
-* @copyright   2024 Jeremy Simon Thornton
-* @version     0.1.0
+* @copyright   2024, 2025,2026 Jeremy Simon Thornton
+* @version     0.5.1
 */
 #include "dos_file_services.h"
 #include "dos_error_types.h"
+#include "dos_error_codes.h"
 #include "dos_services_constants.h"
 #include "dos_file_types.h"
 
@@ -24,7 +25,7 @@
 * - see	INT 21,1B   INT 21,1C
 */
 dos_error_code_t dos_get_disk_free_space(unsigned char drive_number, dos_file_disk_space_info_t* info) {
-    dos_error_code_t _errno = DOS_INVALID_DRIVE_SPECIFIED;
+    dos_error_code_t ecode = DOS_INVALID_DRIVE_SPECIFIED;
     __asm {
         .8086
         pushf
@@ -35,7 +36,7 @@ dos_error_code_t dos_get_disk_free_space(unsigned char drive_number, dos_file_di
         int     DOS_SERVICE
         cmp     ax, DOS_ERROR               ; FFFFh = invalid drive
         je      FAIL
-        mov     _errno, 0                   ; DOS_SUCCESS
+        mov     ecode, 0                   ; DOS_SUCCESS
         lds     di, info
         mov     [di], ax                    ; sectors per cluster
         mov     [di + 2], bx                ; available clusters
@@ -54,7 +55,7 @@ FAIL:   les     di, info                    ; fill struct with error sentinel
 END:    pop     ds
         popf
     }
-    return _errno;
+    return ecode;
 }
 
 /**
@@ -132,7 +133,7 @@ dos_error_code_t dos_get_dta(dos_dta_t** dta) {
 * @note caller is responsible for ensuring DTA is set before calling
 */
 dos_error_code_t dos_find_first_file(const char* filespec, dos_file_attributes_t attributes, dos_dta_t* dta) {
-    dos_error_code_t _errno = DOS_SUCCESS;
+    dos_error_code_t ecode = DOS_SUCCESS;
     __asm {
         .8086
         pushf
@@ -143,12 +144,12 @@ dos_error_code_t dos_find_first_file(const char* filespec, dos_file_attributes_t
         mov     ah, DOS_FIND_FIRST_MATCHING_FILE
         int     DOS_SERVICE
         jnc     END
-        mov     _errno, ax
+        mov     ecode, ax
 
 END:    pop     ds
         popf
     }
-    return _errno;
+    return ecode;
 }
 
 /**
@@ -164,7 +165,7 @@ END:    pop     ds
 * @note caller is responsible for ensuring DTA is set before calling
 */
 dos_error_code_t dos_find_next_file(void) {
-    dos_error_code_t _errno = DOS_SUCCESS;
+    dos_error_code_t ecode = DOS_SUCCESS;
     __asm {
         .8086
         pushf
@@ -173,12 +174,12 @@ dos_error_code_t dos_find_next_file(void) {
         mov     ah, DOS_FIND_NEXT_MATCHING_FILE
         int     DOS_SERVICE
         jnc     END
-        mov     _errno, ax
+        mov     ecode, ax
 
 END:    pop     ds
         popf
     }
-    return _errno;
+    return ecode;
 }
 
 /**
@@ -196,7 +197,7 @@ END:    pop     ds
 * @note - if file already exists, it is truncated to zero bytes on opening
 */
 dos_error_code_t dos_create_file(const char* path_name, dos_file_attributes_t create_attributes, dos_file_handle_t* fhandle) {
-    dos_error_code_t _errno = DOS_SUCCESS;
+    dos_error_code_t ecode = DOS_SUCCESS;
 	__asm {
 		.8086
 		pushf
@@ -207,7 +208,7 @@ dos_error_code_t dos_create_file(const char* path_name, dos_file_attributes_t cr
 		mov		ah, DOS_CREATE_FILE_USING_HANDLE
 		int		DOS_SERVICE
 		jnc		OK
-		mov		_errno, ax
+		mov		ecode, ax
 		mov     ax, DOS_ERROR
 OK:		lds     di, fhandle
         mov     [di], ax
@@ -215,7 +216,7 @@ OK:		lds     di, fhandle
 END:    pop     ds
         popf
 	}
-	return _errno;
+	return ecode;
 }
 
 /**
@@ -232,7 +233,7 @@ END:    pop     ds
 *    = error code if CF set  (see DOS ERROR CODES)
 */
 dos_error_code_t dos_open_file(const char* path_name, unsigned char access_attributes, dos_file_handle_t* fhandle) {
-    dos_error_code_t _errno = DOS_SUCCESS;
+    dos_error_code_t ecode = DOS_SUCCESS;
 	__asm {
 		.8086
 		pushf
@@ -243,7 +244,7 @@ dos_error_code_t dos_open_file(const char* path_name, unsigned char access_attri
 		mov		ah, DOS_OPEN_FILE_USING_HANDLE
 		int		DOS_SERVICE
 		jnc		OK
-		mov		_errno, ax
+		mov		ecode, ax
 		mov     ax, DOS_ERROR
 OK:		lds     di, fhandle
         mov     [di], ax
@@ -251,7 +252,7 @@ OK:		lds     di, fhandle
 END:    pop     ds
         popf
 	}
-	return _errno;
+	return ecode;
 }
 
 /**
@@ -266,7 +267,7 @@ END:    pop     ds
 * - handle is freed
 */
 dos_error_code_t dos_close_file(dos_file_handle_t fhandle) {
-    dos_error_code_t _errno = DOS_SUCCESS;
+    dos_error_code_t ecode = DOS_SUCCESS;
 	__asm {
 		.8086
 		pushf
@@ -276,12 +277,12 @@ dos_error_code_t dos_close_file(dos_file_handle_t fhandle) {
 		mov		ah, DOS_CLOSE_FILE_USING_HANDLE
 		int		DOS_SERVICE
 		jnc		END
-		mov		_errno, ax
+		mov		ecode, ax
 
 END:    pop     ds
         popf
 	}
-	return _errno;
+	return ecode;
 }
 
 /**
@@ -300,7 +301,7 @@ END:    pop     ds
 * - if AX is zero, no data was read, and EOF occurred before read
 */
 dos_error_code_t dos_read_file(dos_file_handle_t fhandle, unsigned short do_bytes, char* buffer, unsigned short* done_bytes) {
-    dos_error_code_t _errno = DOS_SUCCESS;
+    dos_error_code_t ecode = DOS_SUCCESS;
     __asm {
         .8086
         pushf
@@ -312,7 +313,7 @@ dos_error_code_t dos_read_file(dos_file_handle_t fhandle, unsigned short do_byte
         mov     ah, DOS_READ_FILE_OR_DEVICE_USING_HANDLE
         int     DOS_SERVICE
         jnc     OK
-        mov     _errno, ax
+        mov     ecode, ax
         mov     ax, DOS_ERROR               ; EOF as unsigned short (-1)
 
 OK:     lds     di, done_bytes
@@ -324,7 +325,7 @@ OK:     lds     di, done_bytes
 END:    pop     ds
         popf
     }
-    return _errno;
+    return ecode;
 }
 
 /**
@@ -342,7 +343,7 @@ END:    pop     ds
 * - this function can be used to truncate a file to the current file position by writing zero bytes
 */
 dos_error_code_t dos_write_file(dos_file_handle_t fhandle, unsigned short do_bytes, const char* buffer, unsigned short* done_bytes) {
-    dos_error_code_t _errno = DOS_SUCCESS;
+    dos_error_code_t ecode = DOS_SUCCESS;
     __asm {
         .8086
         pushf
@@ -354,7 +355,7 @@ dos_error_code_t dos_write_file(dos_file_handle_t fhandle, unsigned short do_byt
         mov     ah, DOS_WRITE_FILE_OR_DEVICE_USING_HANDLE
         int     DOS_SERVICE
         jnc     OK
-        mov     _errno, ax
+        mov     ecode, ax
         mov     ax, DOS_ERROR               ; EOF as unsigned short (-1)
 
 OK:     lds     di, done_bytes
@@ -366,7 +367,7 @@ OK:     lds     di, done_bytes
 END:    pop     ds
         popf
     }
-    return _errno;
+    return ecode;
 }
 
 /**
@@ -383,7 +384,7 @@ END:    pop     ds
 * @note - documented as not accepting wildcards in filename but actually does in several DOS versions
 */
 dos_error_code_t dos_delete_file(const char* path_name) {
-    dos_error_code_t _errno = DOS_SUCCESS;
+    dos_error_code_t ecode = DOS_SUCCESS;
 	__asm {
 		.8086
 		pushf
@@ -393,12 +394,12 @@ dos_error_code_t dos_delete_file(const char* path_name) {
 		mov		ah, DOS_DELETE_FILE
 		int		DOS_SERVICE
 		jnc		END
-		mov		_errno, ax
+		mov		ecode, ax
 
 END:    pop     ds
         popf
 	}
-	return _errno;
+	return ecode;
 }
 
 /**
@@ -431,7 +432,7 @@ END:    pop     ds
 * be grown from zero to one byte and then to the desired large size
 */
 dos_error_code_t dos_move_file_pointer(dos_file_handle_t fhandle, dos_file_position_t foffset, unsigned char forigin, dos_file_position_t* new_pos) {
-    dos_error_code_t _errno = DOS_SUCCESS;
+    dos_error_code_t ecode = DOS_SUCCESS;
 	__asm {
 		.8086
 		pushf
@@ -444,7 +445,7 @@ dos_error_code_t dos_move_file_pointer(dos_file_handle_t fhandle, dos_file_posit
 		mov		ah, DOS_MOVE_FILE_POINTER_USING_HANDLE
 		int		DOS_SERVICE
 		jnc		OK
-		mov		_errno, ax
+		mov		ecode, ax
 		jmp		END
 
 OK:		lds     si, new_pos
@@ -457,7 +458,7 @@ OK:		lds     si, new_pos
 END:    pop     ds
         popf
 	}
-    return _errno;
+    return ecode;
 }
 
 /**
@@ -480,7 +481,7 @@ END:    pop     ds
 * CX = the attribute if AL was 00
 */
 dos_error_code_t dos_get_file_attributes(const char* path_name, dos_file_attributes_t* attr) {
-    dos_error_code_t _errno = DOS_SUCCESS;
+    dos_error_code_t ecode = DOS_SUCCESS;
 	__asm {
 		.8086
 		pushf
@@ -492,14 +493,14 @@ dos_error_code_t dos_get_file_attributes(const char* path_name, dos_file_attribu
 		mov		ah, DOS_FILE_ATTRIBUTES
 		int		DOS_SERVICE
 		jnc		OK
-		mov		_errno, ax
+		mov		ecode, ax
 OK:		lds     di, attr
         mov     [di], cx
 
 END:    pop     ds
         popf
 	}
-	return _errno;
+	return ecode;
 }
 
 /**
@@ -507,7 +508,7 @@ END:    pop     ds
 * @see file::attributes_t get_file_attributes(char* path_name)
 */
 dos_error_code_t dos_set_file_attributes(const char* path_name, dos_file_attributes_t attributes) {
-    dos_error_code_t _errno = DOS_SUCCESS;
+    dos_error_code_t ecode = DOS_SUCCESS;
     __asm {
 		.8086
 		pushf
@@ -519,12 +520,12 @@ dos_error_code_t dos_set_file_attributes(const char* path_name, dos_file_attribu
 		mov		ah, DOS_FILE_ATTRIBUTES
 		int		DOS_SERVICE
 		jnc		END
-		mov		_errno, ax
+		mov		ecode, ax
 
 END:    pop     ds
         popf
 	}
-	return _errno;
+	return ecode;
 }
 
 /**
@@ -536,7 +537,7 @@ END:    pop     ds
  *	AX = error code if CF set
  */
 dos_error_code_t dos_rename_file(const char* old_path, const char* new_path) {
-    dos_error_code_t _errno = DOS_SUCCESS;
+    dos_error_code_t ecode = DOS_SUCCESS;
 	__asm {
 		.8086
 		pushf
@@ -548,11 +549,11 @@ dos_error_code_t dos_rename_file(const char* old_path, const char* new_path) {
 		mov		ah, DOS_RENAME_FILE
 		int		DOS_SERVICE
 		jnc		END
-		mov		_errno, ax
+		mov		ecode, ax
 
 END:    pop     es
         pop     ds
         popf
 	}
-	return _errno;
+	return ecode;
 }

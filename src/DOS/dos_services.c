@@ -1,13 +1,14 @@
 /**
 * @author      Jeremy Simon Thornton
-* @copyright   2024 Jeremy Simon Thornton
-* @version     0.1.0
+* @copyright   2024, 2025, 2026 Jeremy Simon Thornton
+* @version     0.6.3
 */
 #include "dos_services.h"
 #include "dos_memory_types.h"
 #include "dos_services_types.h"
 #include "dos_services_constants.h"
 #include "dos_error_types.h"
+#include "dos_error_codes.h"
 
 /**
 * @brief Provides a safe method for changing interrupt vectors

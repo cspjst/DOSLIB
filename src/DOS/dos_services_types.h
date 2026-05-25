@@ -1,3 +1,8 @@
+/**
+* @author      Jeremy Simon Thornton
+* @copyright   2024, 2025, 2026 Jeremy Simon Thornton
+* @version     0.2.0
+*/
 #ifndef DOS_SERVICES_TYPES_H
 #define DOS_SERVICES_TYPES_H
 

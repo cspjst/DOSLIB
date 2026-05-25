@@ -11,6 +11,7 @@
 #include <assert.h>
 
 #include "../DOS/dos_memory_services.h"
+#include "../DOS/dos_error_codes.h"
 
 void test_allocate_memory() {
 

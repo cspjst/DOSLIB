@@ -1,8 +1,10 @@
 /**
  * @author      Jeremy Simon Thornton
  * @copyright   2024 Jeremy Simon Thornton
- * @version     0.1.0
+ * @version     0.5.1
  * @url https://www.stanislavs.org/helppc/
+ * @note all functions return dos_error_code_t the caller should test against DOS_SUCCESS
+ * @see dos_perror and dos_strerror in dos_error.h and dos_error_codes.h
  */
 #ifndef DOS_FILE_SERVICES_H
 #define DOS_FILE_SERVICES_H
