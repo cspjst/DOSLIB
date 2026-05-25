@@ -405,11 +405,13 @@ void test_dos_files() {
     // find next should now be exhausted
     err = dos_find_next_file();
     assert(err != 0);
+    dos_perror("", err);
     printf("Find next correctly exhausted (error: %d)\n", err);
 
     // find non-existent filespec
     err = dos_find_first_file("NOTHING.XYZ", FIND_NORMAL, &dta);
     assert(err != 0);
+    dos_perror("", err);
     printf("Non-existent filespec correctly handled (error: %d)\n", err);
 
     dos_delete_file("FIND1.TXT");
