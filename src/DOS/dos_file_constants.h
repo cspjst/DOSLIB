@@ -6,6 +6,9 @@
 #ifndef DOS_SERVICES_FILES_CONSTANTS_H
 #define DOS_SERVICES_FILES_CONSTANTS_H
 
+// As per Microsoft MS-DOS programmer's reference 1993
+#define DOS_MAX_PATH        64
+
 #define DOS_EOF             0xFFFF
 
 #define DOS_STDIN_HANDLE    0
