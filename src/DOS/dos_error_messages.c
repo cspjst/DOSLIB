@@ -3,10 +3,10 @@
 * @copyright   2024, 2025, 2026 Jeremy Simon Thornton
 *
 */
-#ifndef DOS_ERROR_MESSAGES_H
-#define DOS_ERROR_MESSAGES_H
 
-static const char* const DOS_ERROR_STRINGS[] = {
+#include "dos_error_messages.h"
+
+const char* const DOS_ERROR_STRINGS[] = {
     "Success",                              // 0  DOS_SUCCESS
     "Invalid function number",              // 1  DOS_INVALID_FUNCTION_NUMBER
     "File not found",                       // 2  DOS_FILE_NOT_FOUND
@@ -27,5 +27,3 @@ static const char* const DOS_ERROR_STRINGS[] = {
     "Not same device",                      // 17 DOS_NOT_SAME_DEVICE
     "No more files"                         // 18 DOS_NO_MORE_FILES
 };
-
-#endif
