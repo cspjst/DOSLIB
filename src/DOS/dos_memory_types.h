@@ -24,7 +24,7 @@ typedef struct {
 typedef union {
     void* ptr;
     unsigned long memloc;
-    dos_segoff_t segoff;
+    dos_segoff_t parts;
     unsigned short words[2];
     unsigned char bytes[4];
 } dos_address_t;
