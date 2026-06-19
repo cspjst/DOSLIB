@@ -52,7 +52,7 @@ void* dos_get_first_mcb() {
     if (!invars) return invars;
     dos_address_t addr;
     // the segment word ia at invars - 2
-    addr.segoff.segment = *(unsigned short*)((char*)invars - 2);
-    addr.segoff.offset = 0;
+    addr.parts.segment = *(unsigned short*)((char*)invars - 2);
+    addr.parts.offset = 0;
     return addr.ptr;
 }

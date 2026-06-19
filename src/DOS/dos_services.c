@@ -274,7 +274,7 @@ void* dos_undoc_get_ptr_invars() {
 END:    pop     ds
         popf
     }
-    addr.segoff.segment = pseg;
-    addr.segoff.offset = poff;
+    addr.parts.segment = pseg;
+    addr.parts.offset = poff;
     return addr.ptr;
 }
