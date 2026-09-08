@@ -255,7 +255,7 @@ dos_error_code_t dos_set_time(const dos_time_t* time) {
  *   13   dword  pointer to DOS cache buffer header
  *   17 18bytes  NUL device header, first 4 bytes of device header point to the next device in device chain
  */
-void* dos_undoc_get_ptr_invars() {
+void __far* dos_undoc_get_ptr_invars() {
     dos_address_t addr = {0};
     unsigned short pseg, poff;
     pseg = poff = 0;

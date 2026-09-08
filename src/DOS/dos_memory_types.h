@@ -22,7 +22,7 @@ typedef struct {
 #pragma pack()
 
 typedef union {
-    void* ptr;
+    void __far* ptr;
     unsigned long memloc;
     dos_segoff_t parts;
     unsigned short words[2];

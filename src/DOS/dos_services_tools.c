@@ -47,12 +47,12 @@ char* dos_date_to_str(const dos_date_t* d, char* buf, char sep) {
     return buf;
 }
 
-void* dos_get_first_mcb() {
-    void* invars = dos_undoc_get_ptr_invars();
+void __far* dos_get_first_mcb() {
+    void __far* invars = dos_undoc_get_ptr_invars();
     if (!invars) return invars;
     dos_address_t addr;
     // the segment word ia at invars - 2
-    addr.parts.segment = *(unsigned short*)((char*)invars - 2);
+    addr.parts.segment = *(unsigned short __far*)((char __far*)invars - 2);
     addr.parts.offset = 0;
     return addr.ptr;
 }

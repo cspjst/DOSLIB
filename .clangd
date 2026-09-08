@@ -1,0 +1,2 @@
+CompileFlags:
+  Add: [-fms-extensions, -fasm-blocks, -D__far=, -D__near=, -D__watcall=]
