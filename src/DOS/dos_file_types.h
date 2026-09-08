@@ -16,7 +16,7 @@ typedef unsigned long dos_file_size_t;
 * DOS int 21h, 36h      Get Disk Free Space
 */
 typedef struct {
-    unsigned short sectors_per_cluster;    // 0FFFFH if the drive number is invalid
+    unsigned short sectors_per_cluster;
     unsigned short available_clusters;
     unsigned short bytes_per_sector;
     unsigned short clusters_per_drive;

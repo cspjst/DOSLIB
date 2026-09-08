@@ -5,30 +5,26 @@
 */
 #ifndef DOS_EERROR_CODES_H
 #define DOS_EERROR_CODES_H
-
 /**
 * Classic 12h codes
 */
-typedef enum {
-    DOS_SUCCESS = 0,
-    DOS_INVALID_FUNCTION_NUMBER,
-    DOS_FILE_NOT_FOUND,
-    DOS_PATH_NOT_FOUND,
-    DOS_TOO_MANY_OPEN_FILES,
-    DOS_ACCESS_DENIED,
-    DOS_INVALID_HANDLE,
-    DOS_MCB_DESTROYED,
-    DOS_INSUFFICIENT_MEMORY,
-    DOS_INVALID_MEMORY_BLOCK_ADDRESS,
-    DOS_INVALID_ENVIRONMENT,
-    DOS_INVALID_FORMAT,
-    DOS_INVALID_ACCESS_MODE,
-    DOS_INVALID_DATA,
-    DOS_RESERVED,
-    DOS_INVALID_DRIVE_SPECIFIED,
-    DOS_ATTEMPT_TO_REMOVE_CURRENT_DIRECTORY,
-    DOS_NOT_SAME_DEVICE,
-    DOS_NO_MORE_FILES
-} dos_error_codes;
-
+#define DOS_SUCCESS                                0
+#define DOS_INVALID_FUNCTION_NUMBER                1
+#define DOS_FILE_NOT_FOUND                         2
+#define DOS_PATH_NOT_FOUND                         3
+#define DOS_TOO_MANY_OPEN_FILES                    4
+#define DOS_ACCESS_DENIED                          5
+#define DOS_INVALID_HANDLE                         6
+#define DOS_MCB_DESTROYED                          7
+#define DOS_INSUFFICIENT_MEMORY                    8
+#define DOS_INVALID_MEMORY_BLOCK_ADDRESS           9
+#define DOS_INVALID_ENVIRONMENT                    10
+#define DOS_INVALID_FORMAT                         11
+#define DOS_INVALID_ACCESS_MODE                    12
+#define DOS_INVALID_DATA                           13
+#define DOS_RESERVED                               14
+#define DOS_INVALID_DRIVE_SPECIFIED                15
+#define DOS_ATTEMPT_TO_REMOVE_CURRENT_DIRECTORY    16
+#define DOS_NOT_SAME_DEVICE                        17
+#define DOS_NO_MORE_FILES                          18
 #endif

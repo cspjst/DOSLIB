@@ -45,7 +45,13 @@ dos_error_code_t dos_file_eof(dos_file_handle_t fhandle) {
 
 const char* dos_file_ext(const char* path_name) {
     if (!path_name || !path_name[0]) return NULL;
-    return strrchr(path_name, '.');
+
+    const char* ext = NULL;
+    for (const char* p = path_name; *p; p++) {
+        if (*p == '\\' || *p == ':') ext = NULL;      // crossed into a new component, forget any '.' seen so far
+        else if (*p == '.')          ext = p + 1;     // candidate extension start
+    }
+    return (ext && *ext) ? ext : NULL;
 }
 
 dos_file_size_t dos_get_file_size(const char* file_path) {

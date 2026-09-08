@@ -1,6 +1,6 @@
 /**
  * @author      Jeremy Simon Thornton
- * @copyright   2024 Jeremy Simon Thornton
+ * @copyright   2024, 2026 Jeremy Simon Thornton
  *
  * @url https://www.stanislavs.org/helppc/
  * @note all functions return dos_error_code_t the caller should test against DOS_SUCCESS
@@ -62,7 +62,7 @@ dos_error_code_t dos_set_file_attributes(const char* path_name, dos_file_attribu
 // 47  Get current directory
 // ...
 // 4E  Find first matching file
-dos_error_code_t dos_find_first_file(const char* filespec, dos_file_attributes_t attributes, dos_dta_t* dta);
+dos_error_code_t dos_find_first_file(const char* filespec, dos_file_attributes_t attributes);
 // 4F  Find next matching file
 dos_error_code_t dos_find_next_file(void);
 // ...

@@ -389,7 +389,7 @@ void test_dos_files() {
     dos_close_file(fh3);
 
     // find first
-    err = dos_find_first_file("FIND*.TXT", FIND_NORMAL, &dta);
+    err = dos_find_first_file("FIND*.TXT", FIND_NORMAL);
     assert(err == DOS_SUCCESS);
     printf("Found first: %s\n", dta.filename);
 
@@ -409,7 +409,7 @@ void test_dos_files() {
     printf("Find next correctly exhausted (error: %d)\n", err);
 
     // find non-existent filespec
-    err = dos_find_first_file("NOTHING.XYZ", FIND_NORMAL, &dta);
+    err = dos_find_first_file("NOTHING.XYZ", FIND_NORMAL);
     assert(err != 0);
     dos_perror("", err);
     printf("Non-existent filespec correctly handled (error: %d)\n", err);
