@@ -29,8 +29,8 @@ add_compile_options(
     #-l=dos              # Link DOS library
 
     # === MEMORY MODEL (pick ONE) ===
-    -ms                 # Small model: near data/code by default, __far where needed
-    # -ml               # Large model: far data pointers (flexible)
+    # -ms                 # Small model: near data/code by default, __far where needed
+     -ml               # Large model: far data pointers (flexible)
 
     # === SIZE vs SPEED (pick ONE) ===
     -os                 # Optimize for CODE SIZE
