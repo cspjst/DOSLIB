@@ -10,6 +10,9 @@
 ```
 A retro programming library to make life easier using the DOS functions of MSDOS/PCDOS/DRDOS 
 
+> [!NOTE]
+> I write my own code and use Claude to automate the test harnesses
+
 Also, (see [BIOSLIB](https://github.com/cspjst/BIOSLIB/)) inspired by David Jurgens' HelpPC Reference Library and my desire to practice 8086 assembly language like it was 1986 :)
 
 ## Adding the Library
