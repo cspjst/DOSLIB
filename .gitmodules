@@ -1,3 +1,0 @@
-[submodule "bioslib"]
-	path = bioslib
-	url = git@github.com:cspjst/BIOSLIB.git

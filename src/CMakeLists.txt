@@ -1,83 +1,53 @@
 # Copyright (c) 2026 Jeremy Simon Thornton, License: MIT
 cmake_minimum_required(VERSION 3.10)
 
-# Warning: This skips critical compiler checks.
-# Only use this if Watcom fails CMake's detection
-# Necessary to suppress compiler checks for cross compilation using OW2 and C under ARM environments
-set(CMAKE_C_COMPILER_WORKS 1)
+# Toolchain (DOS / I86 / wcl) comes from cmk.sh -D flags.
+project(DOSLIB VERSION 0.1.0 LANGUAGES C)
 
-project(
-    TEST
-    VERSION 0.1.0
-    LANGUAGES C
-)
-
-# Toolchain setup
-set(CMAKE_SYSTEM_NAME DOS)      # Target DOS
-set(CMAKE_C_COMPILER wcl)
-set(CMAKE_CXX_COMPILER wcl)
-set(CMAKE_LINKER wlink)         # Use Watcom's linker
-set(CMAKE_EXECUTABLE_SUFFIX ".exe")
-
-# watcom compiler options
-# https://users.pja.edu.pl/~jms/qnx/help/watcom/compiler-tools/cpopts.html
-if(WATCOM)
+# --- Compiler options --------------------------------------------
+# Reference: https://users.pja.edu.pl/~jms/qnx/help/watcom/compiler-tools/cpopts.html
 add_compile_options(
-    # === REQUIRED (always on) ===
-    -0                  # 8086/8088 instructions ONLY
-    -bt=dos             # Target DOS
-    #-l=dos              # Link DOS library
-
-    # === MEMORY MODEL (pick ONE) ===
-    # -ms                 # Small model: near data/code by default, __far where needed
-     -ml               # Large model: far data pointers (flexible)
-
-    # === SIZE vs SPEED (pick ONE) ===
-    -os                 # Optimize for CODE SIZE
-    -ox                 # Enable extra optimizations (dead code elimination)
-    -zp1                # Pack structs to 1-byte alignment (Critical for data size)
-    -fpi87              # Assume 8087 exists (removes software FP emulation stubs if any are pulled in)
-    # -ot               # Optimize for SPEED
-    # -od               # Disable optimizations (debugging)
-
-    # === DEBUG/INFO ===
-    #-d0                # No debug info (smaller .obj + binary)
-    #-d1                # Line numbers only
-    -d2                # Full debug symbols
-
-    # === STACK SAFETY ===
-    #-e0                 # No stack checking (saves ~20 bytes)
-    -e1               # Minimal stack overflow check
-
-    # === LANGUAGE COMPAT ===
-    -za99               # Partial C99 (va_arg, etc.)
-    # (omit for pure C89, slightly smaller)
-
-    # === WARNINGS ===
-    #-w1                 # Mild warnings (avoids 8086 false positives)
-    # -w0               # No warnings
-     -w2               # More warnings
-
-    # === BUILD OUTPUT ===
-    -zq                 # Quiet mode (cleaner output)
-    # (omit for verbose build log)
+    -0          # 8086/8088 instructions only
+    -bt=dos     # Target DOS
+    -ml         # Large memory model: MUST match every program linking this lib
+    -za99       # C99 (partial in OW2)
+    -zp1        # 1-byte struct packing (structs are filled from asm)
+    -ox         # Full optimisation (note: implies -s, no stack checks)
+    -os         # Favour size
+    -d2         # Full debug info
+    -w2         # Warning level 2
+    -zq         # Quiet
 )
-add_definitions(
-    -D__DOS__
-    -D__8086__  # Explicit 8086 target
-)
+# Optional switches:
+#   -e<n>   stop after n errors
+#   -fpi87  assume 8087 present (only if every target XT has one)
 
-endif()
-
+# --- Sources -----------------------------------------------------
 # WARNING: Using GLOB for convenience. If adding new files, rerun: ./cmk.sh
-file(GLOB SOURCES
+# Library code
+file(GLOB DOS_SOURCES
+    CONFIGURE_DEPENDS
+    DOS/*.c
+)
+
+# Test harness
+file(GLOB TEST_SOURCES
     CONFIGURE_DEPENDS
     *.c
-    DOS/*.c
     TEST/*.c
-    ../bioslib/src/BIOS/*.c
 )
 
-# message(Source list="${SOURCES}")
+# --- Build mode --------------------------------------------------
+# Comment out the next line to build TEST.exe only (no library).
+set(MAKE_LIB ON)
 
-add_executable(TEST ${SOURCES})
+if(MAKE_LIB)
+    # DOS.LIB from library code; TEST.exe gets DOS code only via the lib
+    add_library(DOSLIB STATIC ${DOS_SOURCES})
+    set_target_properties(DOSLIB PROPERTIES OUTPUT_NAME DOS)
+    add_executable(TEST ${TEST_SOURCES})
+    target_link_libraries(TEST PRIVATE DOSLIB)
+else()
+    # Everything compiled straight into TEST.exe
+    add_executable(TEST ${TEST_SOURCES} ${DOS_SOURCES})
+endif()
