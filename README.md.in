@@ -1,0 +1,22 @@
+```
+██████╗  ██████╗ ███████╗██╗     ██╗██████╗
+██╔══██╗██╔═══██╗██╔════╝██║     ██║██╔══██╗
+██║  ██║██║   ██║███████╗██║     ██║██████╔╝
+██║  ██║██║   ██║╚════██║██║     ██║██╔══██╗
+██████╔╝╚██████╔╝███████║███████╗██║██████╔╝
+╚═════╝  ╚═════╝ ╚══════╝╚══════╝╚═╝╚═════╝
+
+© Jeremy Simon Thornton 2024   v @PROJECT_VERSION@
+```
+Retro C library for the DOS INT 21h API: files, memory, errors and system services.
+
+> [!NOTE]
+> I write my own code and use Claude to automate the test harnesses
+
+Also, (see [BIOSLIB](https://github.com/cspjst/BIOSLIB/)) inspired by David Jurgens' HelpPC Reference Library and my desire to practice 8086 assembly language like it was 1986 :)
+
+## Progress...
+
+*N.B.* Implemented on an ad hoc basis as the need(s) arise:
+
+Please see the header files.

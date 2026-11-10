@@ -2,9 +2,9 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Toolchain (DOS / I86 / wcl) comes from cmk.sh -D flags.
-project(DOSLIB VERSION 0.1.0 LANGUAGES C)
+project(DOSLIB VERSION 0.8.5 LANGUAGES C)
 
-# --- Compiler options --------------------------------------------
+# Compiler options
 # Reference: https://users.pja.edu.pl/~jms/qnx/help/watcom/compiler-tools/cpopts.html
 add_compile_options(
     -0          # 8086/8088 instructions only
@@ -22,14 +22,12 @@ add_compile_options(
 #   -e<n>   stop after n errors
 #   -fpi87  assume 8087 present (only if every target XT has one)
 
-# --- Sources -----------------------------------------------------
-# WARNING: Using GLOB for convenience. If adding new files, rerun: ./cmk.sh
+# Sources
 # Library code
 file(GLOB DOS_SOURCES
     CONFIGURE_DEPENDS
     DOS/*.c
 )
-
 # Test harness
 file(GLOB TEST_SOURCES
     CONFIGURE_DEPENDS
@@ -37,8 +35,14 @@ file(GLOB TEST_SOURCES
     TEST/*.c
 )
 
-# --- Build mode --------------------------------------------------
-# Comment out the next line to build TEST.exe only (no library).
+# Versioning
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/../README.md.in
+    ${CMAKE_CURRENT_SOURCE_DIR}/../README.md
+    @ONLY
+)
+
+# Build mode selection
 set(MAKE_LIB ON)
 
 if(MAKE_LIB)
