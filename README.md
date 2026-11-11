@@ -8,6 +8,8 @@
 
 © Jeremy Simon Thornton 2024   v 0.8.5
 ```
+# DOSLIB
+
 Retro C library for the DOS INT 21h API: files, memory, errors and system services.
 
 > [!NOTE]
